@@ -1,0 +1,22 @@
+<h2>🎬 รายการหนังทั้งหมด</h2>
+
+<div *ngIf="movies.length === 0">
+  <p>กำลังโหลดข้อมูลหนัง...</p>
+</div>
+
+<div *ngFor="let movie of movies" class="movie-card">
+  <!-- ลิงก์ไปหน้ารายละเอียดหนัง -->
+  <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
+     <img
+     [src]="'http://localhost:8000/storage/' + movie.poster_url"
+     alt="Poster"
+     width="200"
+     style="border-radius: 8px; margin-bottom: 10px;"
+     />
+    <h3>{{ movie.title }}</h3>
+    <p><strong>ประเภท:</strong> {{ movie.genre }}</p>
+    <p><strong>ความยาว:</strong> {{ movie.duration }} นาที</p>
+    <p style="color: #007bff;">คลิกเพื่อดูรายละเอียด</p>
+  </a>
+  <hr />
+</div>

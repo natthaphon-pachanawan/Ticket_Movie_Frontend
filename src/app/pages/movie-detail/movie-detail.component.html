@@ -1,0 +1,11 @@
+<div *ngIf="movie">
+     <h2>{{ movie.title }}</h2>
+     <img [src]="'http://localhost:8000/storage/' + movie.poster_url" width="300" alt="poster" />
+     <p><strong>ประเภท:</strong> {{ movie.genre }}</p>
+     <p><strong>ผู้กำกับ:</strong> {{ movie.director }}</p>
+     <p><strong>นักแสดง:</strong> {{ movie.cast }}</p>
+     <p><strong>ความยาว:</strong> {{ movie.duration }} นาที</p>
+     <p><strong>ฉายวันที่:</strong> {{ movie.release_date }}</p>
+     <p>{{ movie.description }}</p>
+   </div>
+   

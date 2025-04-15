@@ -1,0 +1,20 @@
+<h2>📝 สมัครสมาชิก</h2>
+
+<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <input name="username" placeholder="ชื่อผู้ใช้" [(ngModel)]="form.username" required />
+  <input name="email" placeholder="อีเมล" type="email" [(ngModel)]="form.email" required />
+  <input name="password" placeholder="รหัสผ่าน" type="password" [(ngModel)]="form.password" required />
+  <input name="first_name" placeholder="ชื่อจริง" [(ngModel)]="form.first_name" required />
+  <input name="last_name" placeholder="นามสกุล" [(ngModel)]="form.last_name" required />
+  <input name="date_of_birth" type="date" [(ngModel)]="form.date_of_birth" />
+  <input name="phone_number" placeholder="เบอร์โทรศัพท์" [(ngModel)]="form.phone_number" />
+
+  <select name="gender" [(ngModel)]="form.gender">
+    <option value="M">ชาย</option>
+    <option value="F">หญิง</option>
+  </select>
+
+  <button type="submit" [disabled]="registerForm.invalid">สมัครสมาชิก</button>
+
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+</form>

@@ -1,0 +1,13 @@
+.movie-card {
+     margin-bottom: 2rem;
+     border: 1px solid #ccc;
+     padding: 1rem;
+     border-radius: 8px;
+     transition: box-shadow 0.3s;
+     max-width: 320px;
+   
+     &:hover {
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     }
+   }
+   

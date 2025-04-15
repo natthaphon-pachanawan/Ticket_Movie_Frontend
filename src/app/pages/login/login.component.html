@@ -1,0 +1,13 @@
+<h2>🔐 เข้าสู่ระบบ</h2>
+
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+  <label>ชื่อผู้ใช้หรืออีเมล</label>
+  <input type="email" name="email" [(ngModel)]="email" required />
+
+  <label>รหัสผ่าน</label>
+  <input type="password" name="password" [(ngModel)]="password" required />
+
+  <button type="submit" [disabled]="loginForm.invalid">เข้าสู่ระบบ</button>
+
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+</form>
