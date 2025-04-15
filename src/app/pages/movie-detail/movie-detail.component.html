@@ -7,5 +7,8 @@
      <p><strong>ความยาว:</strong> {{ movie.duration }} นาที</p>
      <p><strong>ฉายวันที่:</strong> {{ movie.release_date }}</p>
      <p>{{ movie.description }}</p>
+     <a [routerLink]="['/movies', movie.id, 'showtimes']" class="btn btn-outline-primary">
+      ดูรอบฉายทั้งหมด
+    </a>    
    </div>
    

@@ -1,0 +1,16 @@
+<h2>เลือกรอบฉายสำหรับหนัง</h2>
+
+<div *ngIf="showtimeDates.length === 0">
+  <p>กำลังโหลดข้อมูลรอบฉาย...</p>
+</div>
+
+<div *ngFor="let date of showtimeDates">
+  <h3>{{ date }}</h3>
+  <div *ngFor="let s of showtimesByDate[date]" class="showtime-card">
+    <p><strong>เวลา:</strong> {{ s.screening_datetime | date: 'shortTime' }}</p>
+    <p><strong>โรง:</strong> {{ s.screening_room.cinema.name }} - {{ s.screening_room.room_name }}</p>
+    <p><strong>ราคา:</strong> {{ s.price }} บาท</p>
+    <button (click)="goToBooking(s.id)">จองรอบนี้</button>
+    <hr />
+  </div>
+</div>
