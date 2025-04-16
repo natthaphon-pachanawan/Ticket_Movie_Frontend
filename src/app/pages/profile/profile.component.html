@@ -1,0 +1,25 @@
+<h2>👤 แก้ไขข้อมูลส่วนตัว</h2>
+<form (ngSubmit)="updateProfile()">
+  <label>ชื่อจริง:</label>
+  <input type="text" [(ngModel)]="user.first_name" name="first_name" required>
+
+  <label>นามสกุล:</label>
+  <input type="text" [(ngModel)]="user.last_name" name="last_name" required>
+
+  <label>เบอร์โทร:</label>
+  <input type="text" [(ngModel)]="user.phone_number" name="phone_number">
+
+  <label>วันเกิด:</label>
+  <input type="date" [(ngModel)]="user.date_of_birth" name="date_of_birth">
+
+  <label>เพศ:</label>
+  <select [(ngModel)]="user.gender" name="gender">
+    <option value="M">ชาย</option>
+    <option value="F">หญิง</option>
+  </select>
+
+  <button type="submit">💾 บันทึก</button>
+
+  <p *ngIf="success" style="color: green;">{{ success }}</p>
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+</form>

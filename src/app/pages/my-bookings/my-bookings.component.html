@@ -1,0 +1,12 @@
+<h2>🧾 รายการการจองของคุณ</h2>
+<div *ngFor="let booking of bookings" class="booking-card">
+  <p><strong>หนัง:</strong> {{ booking.screening.movie.title }}</p>
+  <p><strong>เวลา:</strong> {{ booking.screening.screening_datetime | date: 'medium' }}</p>
+  <p><strong>จำนวนที่นั่ง:</strong> {{ booking.tickets?.length ?? 0 }}</p>
+  <p><strong>ราคารวม:</strong> {{ booking.total_price }} บาท</p>
+  <p><strong>สถานะ:</strong> {{ booking.status }}</p>
+
+  <a [routerLink]="['/upload-slip']" [queryParams]="{ booking_id: booking.id }">
+     📤 อัปโหลดสลิป
+   </a>   
+</div>

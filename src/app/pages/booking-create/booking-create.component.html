@@ -1,0 +1,52 @@
+<h2 class="title">เลือกที่นั่ง & ยืนยันการจอง</h2>
+
+<!-- แสดงข้อมูลรอบฉาย -->
+<div class="screening-info" *ngIf="screening">
+  <p><strong>หนัง:</strong> {{ screening.movie.title }}</p>
+  <p><strong>โรง:</strong> {{ screening.screening_room.room_name }} - {{ screening.screening_room.cinema.name }}</p>
+  <p><strong>เวลา:</strong> {{ screening.screening_datetime | date: 'medium' }}</p>
+  <p><strong>ราคา:</strong> {{ screening.price }} บาท</p>
+</div>
+
+<!-- จอ -->
+<div class="screen-box">
+  <div class="screen">SCREEN</div>
+</div>
+
+<!-- ถ้ายังไม่โหลดข้อมูลที่นั่ง -->
+<div class="seat-container" *ngIf="getRowKeys().length === 0">
+  <p>กำลังโหลดข้อมูลที่นั่ง...</p>
+</div>
+
+<!-- แสดงที่นั่งแบบ grid แยกตามแถว -->
+<div class="seat-container" *ngFor="let rowKey of getRowKeys()">
+  <h3 class="row-title">{{ rowKey }}</h3>
+  <div class="seat-row">
+    <div 
+      class="seat-box"
+      *ngFor="let seat of seatsByRow[rowKey]"
+      [ngClass]="{
+        'unavailable': !seat.is_active,
+        'selected': isSelected(seat),
+        'vip': seat.seat_type === 'VIP'
+      }"
+      (click)="toggleSelect(seat)"
+    >
+      {{ seat.seat_number }}
+    </div>
+  </div>
+</div>
+
+<!-- ส่วนสรุปการเลือกที่นั่ง -->
+<div class="summary">
+  <h3>ที่นั่งที่เลือก ({{ selectedSeats.length }}):</h3>
+  <ul>
+    <li *ngFor="let s of selectedSeats">
+      {{ s.seat_number }} ({{ s.seat_type }}) - {{ seatPrice(s) }} บาท
+    </li>
+  </ul>
+  <p class="total-price"><strong>ราคารวม:</strong> {{ totalPrice }} บาท</p>
+  <button class="confirm-btn" (click)="submitBooking()" [disabled]="selectedSeats.length === 0">
+    ยืนยันการจอง
+  </button>
+</div>

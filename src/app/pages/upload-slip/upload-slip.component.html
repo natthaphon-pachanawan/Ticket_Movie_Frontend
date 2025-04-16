@@ -1,0 +1,14 @@
+<h2>📤 อัปโหลดสลิปการโอนเงิน</h2>
+
+<input type="file" (change)="onFileSelected($event)" accept="image/*" />
+<div *ngIf="previewUrl">
+  <p>ตัวอย่าง:</p>
+  <img [src]="previewUrl" width="300" />
+</div>
+<p><strong>จำนวนเงินที่ต้องชำระ:</strong> {{ estimatedAmount }} บาท</p>
+
+
+<button (click)="uploadSlip()" [disabled]="!selectedFile">
+  ✅ ยืนยันอัปโหลด
+</button>
+

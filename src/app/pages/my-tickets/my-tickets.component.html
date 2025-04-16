@@ -1,0 +1,14 @@
+<h2>🎟️ ตั๋วของฉัน</h2>
+
+<div *ngIf="tickets.length === 0">
+  <p>ยังไม่มีตั๋วในระบบ</p>
+</div>
+
+<div *ngFor="let ticket of tickets" class="ticket-card">
+  <p><strong>รหัสตั๋ว:</strong> {{ ticket.ticket_code }}</p>
+  <p><strong>ที่นั่ง:</strong> {{ ticket.seat.seat_number }} ({{ ticket.seat.seat_type }})</p>
+  <p><strong>หนัง:</strong> {{ ticket.screening.movie.title }}</p>
+  <p><strong>เวลา:</strong> {{ ticket.screening.screening_datetime | date: 'medium' }}</p>
+  <p><strong>ราคา:</strong> {{ ticket.price }} บาท</p>
+  <p><strong>สถานะ:</strong> {{ ticket.status }}</p>
+</div>
