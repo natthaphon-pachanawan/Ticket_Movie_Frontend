@@ -57,7 +57,7 @@ export class BookingCreateComponent implements OnInit {
         const roomId = this.screening.screening_room_id;
         // เรียกดูข้อมูลที่นั่งของห้อง
         this.http
-          .get<any>(`http://localhost:8000/api/seats/list/${roomId}`)
+          this.http.get<any>(`http://localhost:8000/api/seats/list/${roomId}?screening_id=${this.screeningId}`)
           .subscribe((seatRes) => {
             const seatData = seatRes.data ?? seatRes;
             this.seats = seatData;
