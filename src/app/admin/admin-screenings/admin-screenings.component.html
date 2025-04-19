@@ -1,0 +1,38 @@
+<div class="flex justify-between items-center mb-4">
+     <h2 class="text-xl font-semibold">จัดการ Screenings</h2>
+     <button
+       (click)="goCreate()"
+       class="px-4 py-2 bg-blue-600 text-white rounded"
+     >
+       + Add Screening
+     </button>
+   </div>
+   
+   <table class="min-w-full border">
+     <thead class="bg-gray-100">
+       <tr>
+         <th class="p-2 border">ID</th>
+         <th class="p-2 border">Movie</th>
+         <th class="p-2 border">Cinema / Room</th>
+         <th class="p-2 border">Date & Time</th>
+         <th class="p-2 border">Price</th>
+         <th class="p-2 border">Actions</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let s of screenings" class="hover:bg-gray-50">
+         <td class="p-2 border">{{ s.id }}</td>
+         <td class="p-2 border">{{ s.movie.title }}</td>
+         <td class="p-2 border">
+           {{ s.screening_room.cinema.name }} / {{ s.screening_room.room_name }}
+         </td>
+         <td class="p-2 border">{{ s.screening_datetime | date:'medium' }}</td>
+         <td class="p-2 border">{{ s.price | number:'1.2-2' }} บาท</td>
+         <td class="p-2 border">
+           <button (click)="goEdit(s.id)" class="text-blue-600 mr-2">Edit</button>
+           <button (click)="delete(s.id)" class="text-red-600">Delete</button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   

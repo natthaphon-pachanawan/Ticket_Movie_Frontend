@@ -1,0 +1,55 @@
+<h2 class="text-xl font-semibold mb-4">
+     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Screening Room
+   </h2>
+   
+   <form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
+     <div>
+       <label class="block mb-1">Cinema ID</label>
+       <input
+         name="cinema_id"
+         type="number"
+         [(ngModel)]="room.cinema_id"
+         required
+         class="w-full border p-2"
+       />
+     </div>
+   
+     <div>
+       <label class="block mb-1">Room Name</label>
+       <input
+         name="room_name"
+         [(ngModel)]="room.room_name"
+         required
+         class="w-full border p-2"
+       />
+     </div>
+   
+     <div>
+       <label class="block mb-1">Seat Capacity</label>
+       <input
+         name="seat_capacity"
+         type="number"
+         [(ngModel)]="room.seat_capacity"
+         required
+         class="w-full border p-2"
+       />
+     </div>
+   
+     <div>
+       <label class="block mb-1">Description</label>
+       <textarea
+         name="description"
+         [(ngModel)]="room.description"
+         class="w-full border p-2"
+       ></textarea>
+     </div>
+   
+     <button
+       type="submit"
+       [disabled]="f.invalid"
+       class="px-4 py-2 bg-green-600 text-white rounded"
+     >
+       {{ isEdit ? 'Update' : 'Create' }}
+     </button>
+   </form>
+   

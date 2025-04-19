@@ -1,0 +1,18 @@
+<div *ngIf="loading">Loading…</div>
+<div *ngIf="!loading">
+  <h2>💳 ชำระเงิน</h2>
+  <p><strong>หนัง:</strong> {{booking.screening.movie.title}}</p>
+  <p><strong>เวลา:</strong> {{booking.screening.screening_datetime|date:'medium'}}</p>
+  <p><strong>ยอด:</strong> {{booking.total_price}} บาท</p>
+
+  <img src="http://localhost:8000/storage/payment/qr-code.jpg"
+       alt="QR to pay" width="250" />
+
+  <p class="my-3">
+    ✔️ สแกน QR แล้วกด “อัปโหลดสลิป” ภายใน <b>15 นาที</b><br>
+    ❌ หรือกด “ยกเลิกการจอง”
+  </p>
+
+  <button (click)="goUpload()">📤 อัปโหลดสลิป</button>
+  <button (click)="cancel()">ยกเลิกการจอง</button>
+</div>

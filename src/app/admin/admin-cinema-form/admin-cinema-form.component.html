@@ -1,0 +1,87 @@
+<h2 class="text-xl font-semibold mb-4">
+     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Cinema
+   </h2>
+   
+   <form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
+     <div>
+       <label class="block mb-1">Name</label>
+       <input
+         name="name"
+         [(ngModel)]="cinema.name"
+         required
+         class="w-full border p-2"
+       />
+     </div>
+   
+     <div>
+       <label class="block mb-1">Address</label>
+       <input
+         name="address"
+         [(ngModel)]="cinema.address"
+         required
+         class="w-full border p-2"
+       />
+     </div>
+   
+     <div class="grid grid-cols-3 gap-4">
+       <div>
+         <label class="block mb-1">Province ID</label>
+         <input
+           name="province_id"
+           type="number"
+           [(ngModel)]="cinema.province_id"
+           required
+           class="w-full border p-2"
+         />
+       </div>
+       <div>
+         <label class="block mb-1">District ID</label>
+         <input
+           name="district_id"
+           type="number"
+           [(ngModel)]="cinema.district_id"
+           required
+           class="w-full border p-2"
+         />
+       </div>
+       <div>
+         <label class="block mb-1">Subdistrict ID</label>
+         <input
+           name="subdistrict_id"
+           type="number"
+           [(ngModel)]="cinema.subdistrict_id"
+           required
+           class="w-full border p-2"
+         />
+       </div>
+     </div>
+   
+     <div class="grid grid-cols-2 gap-4">
+       <div>
+         <label class="block mb-1">Contact Phone</label>
+         <input
+           name="contact_phone"
+           [(ngModel)]="cinema.contact_phone"
+           class="w-full border p-2"
+         />
+       </div>
+       <div>
+         <label class="block mb-1">Contact Email</label>
+         <input
+           name="contact_email"
+           type="email"
+           [(ngModel)]="cinema.contact_email"
+           class="w-full border p-2"
+         />
+       </div>
+     </div>
+   
+     <button
+       type="submit"
+       [disabled]="f.invalid"
+       class="px-4 py-2 bg-green-600 text-white rounded"
+     >
+       {{ isEdit ? 'Update' : 'Create' }}
+     </button>
+   </form>
+   

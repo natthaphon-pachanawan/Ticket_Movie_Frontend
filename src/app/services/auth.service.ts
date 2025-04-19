@@ -31,4 +31,9 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
   }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return !!user && user.role?.role_name === 'Admin';
+  }
 }

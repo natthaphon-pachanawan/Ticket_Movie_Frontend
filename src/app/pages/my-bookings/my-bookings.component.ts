@@ -13,11 +13,19 @@ import { HttpClient } from '@angular/common/http';
 export class MyBookingsComponent implements OnInit {
   bookings: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<any>('http://localhost:8000/api/bookings/list').subscribe(res => {
-      this.bookings = res.data ?? res;
-    });
+    // เปลี่ยน URL
+    this.http.get<any>('http://localhost:8000/api/bookings/current')
+      .subscribe(res => this.bookings = res.data ?? res);
   }
+  cancel(b: any) {
+    if (!confirm('ยืนยันยกเลิก?')) return;
+    this.http.post(`http://localhost:8000/api/bookings/cancel/${b.id}`, {})
+      .subscribe(() => this.ngOnInit());
+  }
+
+
+
 }

@@ -134,9 +134,9 @@ export class BookingCreateComponent implements OnInit {
     this.http.post('http://localhost:8000/api/bookings/create', body, {
       headers: { Authorization: `Bearer ${this.token}` }
     }).subscribe({
-      next: () => {
-        alert('🎉 จองตั๋วสำเร็จ!');
-        this.router.navigate(['/tickets']);
+      next:(res:any)=>{
+        alert('🎉 จองสำเร็จ!');
+        this.router.navigate(['/payment'],{queryParams:{booking_id:res.data.id}});
       },
       error: (err) => {
         alert('❌ เกิดข้อผิดพลาดในการจองตั๋ว');
