@@ -1,58 +1,78 @@
+<!-- ส่วนหัว + ปุ่มรีโหลด -->
 <div class="flex justify-between items-center mb-4">
-
-     <h2 class="text-xl font-semibold mb-4">จัดการสลิปการชำระเงิน</h2>
-
-     <div *ngIf="loading">Loading …</div>
-
-     <table *ngIf="!loading" class="min-w-full border text-sm">
-          <thead class="bg-gray-100">
-               <tr>
-                    <th class="p-2 border">ID</th>
-                    <th class="p-2 border">ภาพสลิป</th>
-                    <th class="p-2 border">ผู้ใช้ / หนัง</th>
-                    <th class="p-2 border">ยอด</th>
-                    <th class="p-2 border">สถานะ</th>
-                    <th class="p-2 border">จัดการ</th>
-               </tr>
-          </thead>
-          <tbody>
-               <tr *ngFor="let s of slips" class="hover:bg-gray-50 align-top">
-                    <td class="p-2 border">{{s.id}}</td>
-
-                    <!-- preview image -->
-                    <td class="p-2 border">
-                         <img [src]="imgSrc(s)" alt="slip" width="90" class="border" />
-                    </td>
-
-                    <td class="p-2 border">
-                         <div>👤 {{s.booking?.user?.username}}</div>
-                         <div>🎬 {{s.booking?.screening?.movie?.title}}</div>
-                         <div>⏰ {{s.booking?.screening?.screening_datetime | date:'short'}}</div>
-                    </td>
-
-                    <td class="p-2 border">{{s.amount | number:'1.2-2'}} บาท</td>
-
-                    <td class="p-2 border">
-                         <span [ngClass]="{
-          'text-yellow-600':s.payment_status==='pending',
-          'text-green-600' :s.payment_status==='confirmed',
-          'text-red-600'   :s.payment_status==='rejected'
-        }">
-                              {{s.payment_status}}
-                         </span>
-                    </td>
-
-                    <td class="p-2 border space-x-1">
-                         <button (click)="approve(s)"
-                              *ngIf="s.payment_status==='pending' || s.payment_status==='rejected'"
-                              class="px-2 py-1 bg-green-600 text-white rounded">✔️ Approve</button>
-
-                         <button (click)="reject(s)" *ngIf="s.payment_status==='pending'"
-                              class="px-2 py-1 bg-yellow-600 text-white rounded">Reject</button>
-
-                         <button (click)="remove(s)" class="px-2 py-1 bg-red-600 text-white rounded">Delete</button>
-                    </td>
-               </tr>
-          </tbody>
-     </table>
-</div>
+     <h2 class="text-xl font-semibold">จัดการสลิปการชำระเงิน</h2>
+   </div>
+   
+   <!-- Loading -->
+   <div *ngIf="loading" class="py-4 text-center">Loading …</div>
+   
+   <!-- ตาราง -->
+   <table *ngIf="!loading" class="w-full border-collapse text-sm">
+     <thead class="bg-gray-200">
+       <tr>
+         <th class="border px-2 py-1">ID</th>
+         <th class="border px-2 py-1">สลิป</th>
+         <th class="border px-2 py-1">ผู้ใช้ / หนัง</th>
+         <th class="border px-2 py-1">ยอด</th>
+         <th class="border px-2 py-1">สถานะ</th>
+         <th class="border px-2 py-1">Actions</th>
+       </tr>
+     </thead>
+   
+     <tbody>
+       <tr *ngFor="let s of slips" class="hover:bg-gray-50 align-top">
+         <!-- ID -->
+         <td class="border px-2 py-1">{{ s.id }}</td>
+   
+         <!-- รูปสลิป -->
+         <td class="border px-2 py-1">
+           <img [src]="imgSrc(s)" width="90" class="border rounded" />
+         </td>
+   
+         <!-- ผู้ใช้ / หนัง -->
+         <td class="border px-2 py-1">
+           <div>👤 {{ s.booking?.user?.username || '—' }}</div>
+           <div>🎬 {{ s.booking?.screening?.movie?.title || '—' }}</div>
+           <div>⏰ {{ s.booking?.screening?.screening_datetime | date:'short' }}</div>
+         </td>
+   
+         <!-- ยอด -->
+         <td class="border px-2 py-1 text-right">
+           {{ s.amount | number:'1.2-2' }} บาท
+         </td>
+   
+         <!-- สถานะ -->
+         <td class="border px-2 py-1">
+           <span class="px-2 py-0.5 rounded text-xs"
+                 [ngClass]="{
+                   'bg-yellow-100 text-yellow-700': s.payment_status==='pending',
+                   'bg-green-100  text-green-700' : s.payment_status==='confirmed',
+                   'bg-red-100    text-red-700'   : s.payment_status==='rejected'
+                 }">
+             {{ s.payment_status }}
+           </span>
+         </td>
+   
+         <!-- ปุ่ม -->
+         <td class="border px-2 py-1 space-x-1">
+           <button *ngIf="s.payment_status==='pending' || s.payment_status==='rejected'"
+                   (click)="approve(s)"
+                   class="px-2 py-1 bg-green-600 text-white rounded">
+             ✔️ Approve
+           </button>
+   
+           <button *ngIf="s.payment_status==='pending'"
+                   (click)="reject(s)"
+                   class="px-2 py-1 bg-yellow-600 text-white rounded">
+             Reject
+           </button>
+   
+           <button (click)="remove(s)"
+                   class="px-2 py-1 bg-red-600 text-white rounded">
+             Delete
+           </button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   

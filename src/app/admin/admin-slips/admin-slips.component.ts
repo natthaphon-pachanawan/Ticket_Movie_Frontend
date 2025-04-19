@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule }     from '@angular/common';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
 
+interface User      { username: string }
+interface Movie     { title: string }
+interface Screening { movie?: Movie; screening_datetime: string }
+interface Booking   { user?: User; screening?: Screening; total_price: number }
+
 interface Slip {
   id: number;
   booking_id: number;
   amount: number;
-  payment_status: 'pending'|'confirmed'|'rejected';
-  payment_date: string|null;
+  payment_status: 'pending' | 'confirmed' | 'rejected';
+  payment_date: string | null;
   slip_image_url: string;
-  booking: {
-    user: { username:string },
-    screening:{ movie:{ title:string } , screening_datetime:string },
-    total_price:number
-  }
+  booking?: Booking;
 }
 
 @Component({
