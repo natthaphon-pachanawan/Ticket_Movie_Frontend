@@ -98,6 +98,22 @@
      }
 }
 
+/* booking-create.component.scss */
+.seat-box.unavailable {
+     cursor: not-allowed;
+     background: #ccc;
+}
+
+.seat-box.vip {
+     background: #ffd700;
+}
+
+/* VIP ยังเลือกได้ */
+.seat-box.selected {
+     background: #38bdf8;
+}
+
+
 .summary {
      background-color: #f1f2f6;
      padding: 15px;

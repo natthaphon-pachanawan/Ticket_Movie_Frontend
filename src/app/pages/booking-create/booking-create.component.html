@@ -22,16 +22,11 @@
 <div class="seat-container" *ngFor="let rowKey of getRowKeys()">
   <h3 class="row-title">{{ rowKey }}</h3>
   <div class="seat-row">
-    <div 
-      class="seat-box"
-      *ngFor="let seat of seatsByRow[rowKey]"
-      [ngClass]="{
-        'unavailable': !seat.is_active,
-        'selected': isSelected(seat),
-        'vip': seat.seat_type === 'VIP'
-      }"
-      (click)="toggleSelect(seat)"
-    >
+    <div class="seat-box" *ngFor="let seat of seatsByRow[rowKey]" [ngClass]="{
+    'unavailable': !seat.is_active || !!seat.is_reserved,
+    'selected'   : isSelected(seat),
+    'vip'        : seat.seat_type === 'VIP'
+  }" (click)="toggleSelect(seat)">
       {{ seat.seat_number }}
     </div>
   </div>

@@ -18,13 +18,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { MovieShowtimesComponent } from './pages/movie-showtimes/movie-showtimes.component';
 import { BookingCreateComponent } from './pages/booking-create/booking-create.component';
-import { UploadSlipComponent } from './pages/upload-slip/upload-slip.component';
 import { MyBookingsComponent } from './pages/my-bookings/my-bookings.component';
 import { MyTicketsComponent } from './pages/my-tickets/my-tickets.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
+import { PaymentAndSlipComponent } from './pages/payment-page/payment-and-slip.component';
 import { AdminSlipsComponent } from './admin/admin-slips/admin-slips.component';
-import { MyBookingHistoryComponent } from './pages/my-booking-history/my-booking-history.component';
 
 
 export const routes: Routes = [
@@ -34,7 +32,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'movies/:id/showtimes', component: MovieShowtimesComponent },
   { path: 'booking/create', component: BookingCreateComponent, canActivate: [AuthGuard] },
-  { path: 'upload-slip', component: UploadSlipComponent, canActivate: [AuthGuard] },
   { path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard] },
   { path: 'tickets', component: MyTicketsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
@@ -65,8 +62,7 @@ export const routes: Routes = [
       { path: 'slips',               component: AdminSlipsComponent },
     ]
   },
-  { path: 'payment', component: PaymentPageComponent, canActivate:[AuthGuard] },
-  { path:'booking-history', component:MyBookingHistoryComponent, canActivate:[AuthGuard] },
+  { path: 'payment', component: PaymentAndSlipComponent, canActivate:[AuthGuard] },
   
 ];
 

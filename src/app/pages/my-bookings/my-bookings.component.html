@@ -1,30 +1,36 @@
-<h2>🧾 รายการการจองของคุณ</h2>
-<div *ngFor="let booking of bookings" class="booking-card">
-  <div class="mb-4">
-    <button routerLink="/booking-history"
-            class="px-3 py-1 bg-gray-200 rounded">
-      📚 ประวัติการจอง
-    </button>
-  </div>
-  
-  <p><strong>หนัง:</strong> {{ booking.screening.movie.title }}</p>
-  <p><strong>เวลา:</strong> {{ booking.screening.screening_datetime | date: 'medium' }}</p>
-  <p><strong>จำนวนที่นั่ง:</strong> {{ booking.tickets?.length ?? 0 }}</p>
-  <p><strong>ราคารวม:</strong> {{ booking.total_price }} บาท</p>
-  <p><strong>สถานะ:</strong> {{ booking.status }}</p>
+<h2 class="text-xl font-semibold mb-4">🧾 รายการการจองของคุณ</h2>
 
-  <ng-container [ngSwitch]="booking.status">
-    <button *ngSwitchCase="'active'"
-            (click)="cancel(booking)"
-            class="text-red-600 mr-2">
-       ยกเลิก
-    </button>
-    <span *ngSwitchCase="'cancelled'" class="text-gray-500">‑ ยกเลิกแล้ว ‑</span>
-  </ng-container>
+<div *ngIf="bookings.length === 0" class="text-gray-500">– ไม่มีรายการ –</div>
 
-  <a [routerLink]="['/upload-slip']"
-     [queryParams]="{ booking_id: booking.id }"
-     *ngIf="booking.status==='active'">
-     📤 {{ booking.slip ? 'ดู/แก้ไขสลิป' : 'อัปโหลดสลิป' }}
-  </a>
+<div *ngFor="let b of bookings" class="booking-card p-4 mb-3 border rounded">
+  <p><strong>หนัง:</strong> {{ b.screening.movie.title }}</p>
+  <p><strong>เวลา:</strong> {{ b.screening.screening_datetime | date:'medium' }}</p>
+  <p><strong>จำนวนที่นั่ง:</strong> {{ b.tickets?.length ?? 0 }}</p>
+  <p><strong>ราคารวม:</strong> {{ b.total_price }} บาท</p>
+  <p><strong>สถานะ:</strong> {{ b.display_status }}</p>
+
+  <!-- ปุ่มยกเลิก (เฉพาะ active ไม่มี slip หรือ pending) -->
+  <button *ngIf="b.status === 'active' && (!b.slip || b.slip.payment_status === 'rejected')" (click)="cancel(b)"
+    class="mt-2 text-red-600">
+    ยกเลิก
+  </button>
+
+
+  <!-- ปุ่มชำระเงิน -->
+  <button *ngIf="b.can_pay" (click)="goPay(b.id)" class="mt-2 px-3 py-1 bg-blue-500 text-white rounded">
+    💳 ชำระเงิน
+  </button>
+
+  <!-- ปุ่มดู/อัปโหลดสลิป (ถ้ากด pay แล้วไปหน้า payment, upload-slip)
+  <a *ngIf="b.status==='active' && b.slip && b.slip.payment_status==='rejected'"
+     [routerLink]="['/upload-slip']"
+     [queryParams]="{ booking_id: b.id }"
+     class="mt-2 ml-2 px-3 py-1 bg-yellow-500 text-white rounded">
+    📤 แนบสลิปใหม่
+  </a> -->
+
+  <!-- ปุ่มดูตั๋ว -->
+  <button *ngIf="b.can_view_ticket" (click)="goTickets()" class="mt-2 ml-2 px-3 py-1 bg-green-500 text-white rounded">
+    🎟️ ดูตั๋ว
+  </button>
 </div>

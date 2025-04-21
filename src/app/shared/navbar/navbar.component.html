@@ -1,5 +1,5 @@
 <nav style="display: flex; gap: 1rem; padding: 1rem; background: #f0f0f0;">
-  <a routerLink="/">หน้าแรก</a>
+  <button (click)="goHome()">หน้าแรก</button>
 
   <span style="margin-left: auto;">
     <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']">เข้าสู่ระบบ</a>
@@ -8,8 +8,13 @@
     <span *ngIf="auth.isLoggedIn()">
       👤 {{ auth.getUser()?.first_name }}
       <a [routerLink]="['/profile']">👤 แก้ไขข้อมูล</a>
-      <a [routerLink]="['/my-bookings']">🧾 รายการของฉัน</a>
-      <a [routerLink]="['/tickets']">🎟️ ตั๋วของฉัน</a> <!-- ✅ ใส่ตรงนี้ -->
+      
+      <!-- ✅ เฉพาะ user ทั่วไป -->
+      <ng-container *ngIf="!auth.isAdmin()">
+        <a [routerLink]="['/my-bookings']">🧾 การจองของฉัน</a>
+        <a [routerLink]="['/tickets']">🎟️ ตั๋วของฉัน</a>
+      </ng-container>
+
       <button (click)="logout()">ออกจากระบบ</button>
     </span>
   </span>

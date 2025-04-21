@@ -16,4 +16,13 @@ export class NavbarComponent {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+
+  goHome() {
+    // ✅ ตรวจว่าเป็นแอดมินหรือไม่
+    if (this.auth.isAdmin()) {
+      this.router.navigate(['/admin']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 }
