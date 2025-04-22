@@ -23,6 +23,7 @@ import { MyTicketsComponent } from './pages/my-tickets/my-tickets.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PaymentAndSlipComponent } from './pages/payment-page/payment-and-slip.component';
 import { AdminSlipsComponent } from './admin/admin-slips/admin-slips.component';
+import { AdminReportsComponent } from './admin/admin-reports/admin-reports.component';
 
 
 export const routes: Routes = [
@@ -63,6 +64,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'payment', component: PaymentAndSlipComponent, canActivate:[AuthGuard] },
+  { path: 'admin/reports', component: AdminReportsComponent , canActivate: [AuthGuard] }
   
 ];
 

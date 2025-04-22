@@ -4,6 +4,11 @@ import { FormsModule }     from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+interface Cinema {
+  id: number;
+  name: string;
+}
+
 @Component({
   standalone: true,
   selector: 'app-admin-room-form',
@@ -19,6 +24,7 @@ export class AdminRoomFormComponent implements OnInit {
     seat_capacity: null,
     description: ''
   };
+  cinemas: Cinema[] = [];  // เก็บ list โรงหนัง
 
   constructor(
     private route: ActivatedRoute,
@@ -27,12 +33,20 @@ export class AdminRoomFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // 1) โหลดรายการโรงหนัง
+    this.http
+      .get<{ data: Cinema[] }>('http://localhost:8000/api/cinemas/list')
+      .subscribe(res => this.cinemas = res.data);
+
+    // 2) ตรวจ edit mode
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
       this.http
         .get<{ data: any }>(`http://localhost:8000/api/screening-rooms/detail/${id}`)
-        .subscribe(res => this.room = res.data);
+        .subscribe(res => {
+          this.room = res.data;
+        });
     }
   }
 

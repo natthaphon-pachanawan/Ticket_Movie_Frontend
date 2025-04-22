@@ -1,81 +1,145 @@
 <h2 class="text-xl font-semibold mb-4">
-     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Seat
-   </h2>
-   
-   <form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
-     <div>
-       <label class="block mb-1">Room ID</label>
-       <input
-         name="screening_room_id"
-         type="number"
-         [(ngModel)]="seat.screening_room_id"
-         readonly
-         class="w-full border p-2 bg-gray-100"
-       />
-     </div>
-   
-     <div>
-       <label class="block mb-1">Seat Number</label>
-       <input
-         name="seat_number"
-         [(ngModel)]="seat.seat_number"
-         required
-         class="w-full border p-2"
-       />
-     </div>
-   
-     <div class="grid grid-cols-2 gap-4">
-       <div>
-         <label class="block mb-1">Row</label>
-         <input
-           name="row"
-           type="number"
-           [(ngModel)]="seat.row"
-           required
-           class="w-full border p-2"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">Column</label>
-         <input
-           name="column"
-           type="number"
-           [(ngModel)]="seat.column"
-           required
-           class="w-full border p-2"
-         />
-       </div>
-     </div>
-   
-     <div>
-       <label class="block mb-1">Seat Type</label>
-       <select
-         name="seat_type"
-         [(ngModel)]="seat.seat_type"
-         class="w-full border p-2"
-       >
-         <option value="regular">Regular</option>
-         <option value="VIP">VIP</option>
-       </select>
-     </div>
-   
-     <div>
-       <label class="inline-flex items-center">
-         <input
-           type="checkbox"
-           name="is_active"
-           [(ngModel)]="seat.is_active"
-         />
-         <span class="ml-2">Active</span>
-       </label>
-     </div>
-   
-     <button
-       type="submit"
-       [disabled]="f.invalid"
-       class="px-4 py-2 bg-green-600 text-white rounded"
-     >
-       {{ isEdit ? 'Update' : 'Create' }}
-     </button>
-   </form>
-   
+  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Seat
+</h2>
+
+<form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
+
+  <!-- [1] เลือกโหมด (ซ่อนใน edit) -->
+  <div *ngIf="!isEdit">
+    <label class="mr-4">
+      <input type="radio"
+             name="mode"
+             [(ngModel)]="mode"
+             value="single"
+             (change)="generatePreview()" />
+      Single
+    </label>
+    <label>
+      <input type="radio"
+             name="mode"
+             [(ngModel)]="mode"
+             value="bulk"
+             (change)="generatePreview()" />
+      Bulk
+    </label>
+  </div>
+
+  <!-- [2] SINGLE (ทั้งสร้างและแก้ไข) -->
+  <ng-container *ngIf="mode === 'single'">
+    <div>
+      <label class="block mb-1">Seat Number</label>
+      <input name="seat_number"
+             [(ngModel)]="seat.seat_number"
+             required
+             class="w-full border p-2" />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1">Row</label>
+        <input name="row"
+               type="number"
+               [(ngModel)]="seat.row"
+               required
+               class="w-full border p-2" />
+      </div>
+      <div>
+        <label class="block mb-1">Column</label>
+        <input name="column"
+               type="number"
+               [(ngModel)]="seat.column"
+               required
+               class="w-full border p-2" />
+      </div>
+    </div>
+    <!-- เลือกประเภท Regular / VIP -->
+    <div>
+      <label class="block mb-1">Seat Type</label>
+      <select name="seat_type"
+              [(ngModel)]="seat.seat_type"
+              required
+              class="w-full border p-2">
+        <option value="regular">Regular</option>
+        <option value="VIP">VIP</option>
+      </select>
+    </div>
+  </ng-container>
+
+  <!-- [3] BULK (ซ่อนใน edit) -->
+  <ng-container *ngIf="!isEdit && mode === 'bulk'">
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label class="block mb-1">Start Row</label>
+        <input name="start_row"
+               type="number"
+               min="1"
+               [(ngModel)]="bulk.start_row"
+               (ngModelChange)="generatePreview()"
+               required
+               class="w-full border p-2" />
+      </div>
+      <div>
+        <label class="block mb-1">Number of Rows</label>
+        <input name="bulk_rows"
+               type="number"
+               min="1"
+               [(ngModel)]="bulk.bulk_rows"
+               (ngModelChange)="generatePreview()"
+               required
+               class="w-full border p-2" />
+      </div>
+      <div>
+        <label class="block mb-1">Columns per Row</label>
+        <input name="bulk_columns"
+               type="number"
+               min="1"
+               [(ngModel)]="bulk.bulk_columns"
+               (ngModelChange)="generatePreview()"
+               required
+               class="w-full border p-2" />
+      </div>
+    </div>
+    <div>
+      <label class="block mb-1">Optional Prefix</label>
+      <input name="prefix"
+             [(ngModel)]="bulk.prefix"
+             (ngModelChange)="generatePreview()"
+             class="w-full border p-2"
+             placeholder="ถ้าไม่ใส่ ใช้ A,B,C แทน" />
+    </div>
+
+    <!-- พรีวิวใน bulk mode -->
+    <div class="mt-4">
+      <h3 class="font-medium mb-2">Preview Seats</h3>
+      <div class="grid gap-2"
+           [ngStyle]="{'grid-template-columns':'repeat('+bulk.bulk_columns+',minmax(0,1fr))'}">
+        <div *ngFor="let p of previewSeats"
+             (click)="toggleInclude(p)"
+             [class.opacity-30]="!p.include"
+             class="border p-2 text-center cursor-pointer">
+          <div>{{ p.seat_number }}</div>
+          <select [(ngModel)]="p.seat_type"
+                  name="type-{{p.row}}-{{p.column}}">
+            <option value="regular">Regular</option>
+            <option value="VIP">VIP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- [4] is_active -->
+  <div>
+    <label class="inline-flex items-center">
+      <input type="checkbox"
+             name="is_active"
+             [(ngModel)]="seat.is_active" />
+      <span class="ml-2">Active</span>
+    </label>
+  </div>
+
+  <button type="submit"
+          [disabled]="f.invalid"
+          class="px-4 py-2 bg-green-600 text-white rounded">
+    {{ isEdit ? 'Update' : 'Create' }}
+  </button>
+</form>

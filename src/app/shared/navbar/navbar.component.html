@@ -15,6 +15,11 @@
         <a [routerLink]="['/tickets']">🎟️ ตั๋วของฉัน</a>
       </ng-container>
 
+      <!-- ✅ เฉพาะ admin -->
+      <ng-container *ngIf="auth.isAdmin()">
+        <a [routerLink]="['/admin/reports']">📊 รายงานยอดขาย</a>
+      </ng-container>
+
       <button (click)="logout()">ออกจากระบบ</button>
     </span>
   </span>
