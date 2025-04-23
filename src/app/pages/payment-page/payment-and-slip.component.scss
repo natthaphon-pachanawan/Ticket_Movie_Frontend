@@ -1,0 +1,107 @@
+/* 0) Wrapper กึ่งกลาง */
+.content-wrapper {
+     max-width: 600px;   /* ปรับตามขนาดที่ต้องการ */
+     margin: 0 auto;
+   }
+   
+   /* 1) พื้นหลังหลักของหน้า */
+   :host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117;  /* พื้นหลังหลัก */
+     color: #c9d1d9;              /* ตัวหนังสืออ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   /* 2) หัวเรื่อง */
+   h2.text-2xl, .font-semibold {
+     font-size: 1.75rem;
+     font-weight: 600;
+     color: #58A6FF;              /* Accent ฟ้าอ่อน */
+     margin-bottom: 1rem;
+     text-align: center;
+   }
+   
+   /* 3) กล่องข้อมูลการจอง */
+   .screening-info {
+     border-bottom: 1px solid #30363D;
+     padding-bottom: 1rem;
+     margin-bottom: 1.5rem;
+     text-align: left;
+     
+     p {
+       margin: 0.25rem 0;
+       font-size: 1rem;
+       strong { color: #8B949E; }
+     }
+   }
+   
+   /* 4) โซน QR Code */
+   .qr-zone {
+     img.border {
+       border: 1px solid #30363D;
+       border-radius: 4px;
+       display: block;
+       margin: 0 auto;
+     }
+     .mt-2 {
+       margin-top: 0.5rem;
+       text-align: center;
+     }
+     .text-sm {
+       font-size: 0.875rem;
+       color: #8B949E;
+     }
+     .text-sm b {
+       color: #c9d1d9;
+     }
+   }
+   
+   /* 5) สถานะสลิป */
+   .space-y-1 > * + * {
+     margin-top: 0.5rem;
+   }
+   .text-yellow-600 { color: #D29922; }
+   .text-green-600  { color: #2EA043; }
+   .text-red-600    { color: #D64045; }
+   
+   /* 6) ปุ่มและ input */
+   input[type="file"] {
+     color: #c9d1d9;
+     font-size: 0.9rem;
+   }
+   button {
+     display: inline-block;
+     font-size: 0.95rem;
+     font-weight: 600;
+     border-radius: 4px;
+     transition: background-color 0.2s;
+     margin: 0.5rem auto;
+   
+     &.bg-green-600 {
+       background-color: #238636;
+       color: #fff;
+       &:hover:not([disabled]) { background-color: #2EA043; }
+       &:disabled {
+         background-color: #30363D;
+         opacity: 0.6;
+         cursor: not-allowed;
+       }
+     }
+   
+     &.bg-red-500 {
+       background-color: #A40E23;
+       color: #fff;
+       &:hover { background-color: #C7132D; }
+     }
+   
+     &.rounded {
+       padding: 0.5rem 1rem;
+     }
+   }
+   
+   /* 7) พรีวิวสลิป */
+   .space-y-2 > * + * {
+     margin-top: 0.75rem;
+   }
+   

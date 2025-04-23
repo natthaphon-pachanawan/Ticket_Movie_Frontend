@@ -1,16 +1,68 @@
-<h2>เลือกรอบฉายสำหรับหนัง</h2>
+<div class="showtimes-container">
 
-<div *ngIf="showtimeDates.length === 0">
-  <p>กำลังโหลดข้อมูลรอบฉาย...</p>
-</div>
+  <!-- ส่วนตัวกรอง -->
+  <div class="filters">
+    <select
+      [(ngModel)]="selectedProvince"
+      (ngModelChange)="onProvinceChange()"
+    >
+      <option value="">— เลือกจังหวัด —</option>
+      <option *ngFor="let p of provinces" [value]="p">{{ p }}</option>
+    </select>
 
-<div *ngFor="let date of showtimeDates">
-  <h3>{{ date }}</h3>
-  <div *ngFor="let s of showtimesByDate[date]" class="showtime-card">
-    <p><strong>เวลา:</strong> {{ s.screening_datetime | date: 'shortTime' }}</p>
-    <p><strong>โรง:</strong> {{ s.screening_room.cinema.name }} - {{ s.screening_room.room_name }}</p>
-    <p><strong>ราคา:</strong> {{ s.price }} บาท</p>
-    <button (click)="goToBooking(s.id)">จองรอบนี้</button>
-    <hr />
+    <select
+      [(ngModel)]="selectedAmphoe"
+      (ngModelChange)="onAmphoeChange()"
+      [disabled]="!selectedProvince"
+    >
+      <option value="">— เลือกอำเภอ —</option>
+      <option *ngFor="let a of amphoes" [value]="a">{{ a }}</option>
+    </select>
+
+    <select
+      [(ngModel)]="selectedTambon"
+      (ngModelChange)="applyFilters()"
+      [disabled]="!selectedAmphoe"
+    >
+      <option value="">— เลือกตำบล —</option>
+      <option *ngFor="let t of tambons" [value]="t">{{ t }}</option>
+    </select>
   </div>
+
+  <h2 class="page-title">เลือกรอบฉายสำหรับหนัง</h2>
+
+  <ng-container *ngIf="showtimeDates.length === 0">
+    <p class="loading">กำลังโหลดข้อมูลรอบฉาย...</p>
+  </ng-container>
+
+  <ng-container *ngFor="let date of showtimeDates">
+    <div class="date-group">
+      <h3 class="date-title">{{ date | date:'fullDate' }}</h3>
+      <div class="showtime-grid">
+        <div *ngFor="let s of showtimesByDate[date]" class="showtime-card">
+          <div class="time">
+            <i class="fa fa-clock-o"></i>
+            {{ s.screening_datetime | date:'shortTime' }}
+          </div>
+          <div class="room">
+            <i class="fa fa-building-o"></i>
+            <strong>{{ s.screening_room.cinema.name }}</strong>
+            <div class="address">
+              <i class="fa fa-map-marker"></i>
+              {{ s.screening_room.cinema.province.name_th }}
+              {{ s.screening_room.cinema.district.name_th }}
+              {{ s.screening_room.cinema.subdistrict.name_th }}
+            </div>
+          </div>                
+          <div class="price">
+            <i class="fa fa-money"></i>
+            {{ s.price | number:'1.0-0' }} ฿
+          </div>
+          <button class="btn-book" (click)="goToBooking(s.id)">
+            จองรอบนี้
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

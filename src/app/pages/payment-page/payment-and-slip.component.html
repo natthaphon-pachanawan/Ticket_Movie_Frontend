@@ -1,62 +1,66 @@
-<div *ngIf="loading" class="p-4">Loading…</div>
-<div *ngIf="!loading" class="p-4 space-y-4">
+<!-- payment-and-slip.component.html -->
+<div class="content-wrapper">
+  <div *ngIf="loading" class="p-4">Loading…</div>
+  <div *ngIf="!loading" class="p-4 space-y-4">
+    <h2 class="text-2xl font-semibold">💳 ชำระเงิน & แนบสลิป</h2>
 
-  <h2 class="text-2xl font-semibold">💳 ชำระเงิน & แนบสลิป</h2>
-
-  <!-- ข้อมูลการจอง -->
-  <div class="border-b pb-2">
-    <p><strong>หนัง:</strong> {{ booking.screening.movie.title }}</p>
-    <p><strong>เวลา:</strong> {{ booking.screening.screening_datetime | date:'medium' }}</p>
-    <p><strong>ยอดชำระ:</strong> {{ booking.total_price }} บาท</p>
-  </div>
-
-  <!-- QR Code -->
-  <div>
-    <img src="http://localhost:8000/storage/payment/qr-code.jpg"
-         alt="QR to pay" width="250" class="border"/>
-    <p class="mt-2 text-sm">
-      ✔️ สแกน QR แล้วอัปโหลดสลิปภายใน <b>15 นาที</b><br>
-      ❌ หรือกด “ยกเลิกการจอง”
-    </p>
-  </div>
-
-  <!-- สถานะสลิป -->
-  <div *ngIf="slipStatus!=='none'" class="space-y-1">
-    <p>
-      สถานะสลิป:
-      <span [ngClass]="{
-        'text-yellow-600': slipStatus==='pending',
-        'text-green-600' : slipStatus==='confirmed',
-        'text-red-600'   : slipStatus==='rejected'
-      }">{{ slipStatus }}</span>
-    </p>
-    <img *ngIf="slipStatus!=='rejected'"
-         [src]="'http://localhost:8000/storage/'+slip.slip_image_url"
-         width="260" class="border"/>
-    <p *ngIf="slipStatus==='rejected'" class="text-red-600">
-      ❌ สลิปถูกปฏิเสธ กรุณาอัปโหลดใหม่
-    </p>
-  </div>
-
-  <!-- ปุ่มอัปโหลดสลิปใหม่ / upload -->
-  <div *ngIf="canUpload()" class="space-y-2">
-    <input type="file"
-           accept="image/*"
-           (change)="onFileSelected($event)" />
-    <div *ngIf="previewUrl">
-      <p>ตัวอย่าง:</p>
-      <img [src]="previewUrl" width="260" class="border"/>
+    <!-- ข้อมูลการจอง -->
+    <div class="screening-info">
+      <p><strong>หนัง:</strong> {{ booking.screening.movie.title }}</p>
+      <p><strong>เวลา:</strong> {{ booking.screening.screening_datetime | date:'medium' }}</p>
+      <p><strong>ยอดชำระ:</strong> {{ booking.total_price }} บาท</p>
     </div>
-    <button class="px-4 py-2 bg-green-600 text-white rounded"
-            (click)="uploadSlip()"
-            [disabled]="!selectedFile || uploading">
-      ✅ {{ slip ? 'อัปเดตสลิปใหม่' : 'อัปโหลดสลิป' }}
-    </button>
-  </div>
 
-  <!-- ปุ่มยกเลิกการจอง -->
-  <button class="px-4 py-2 bg-red-500 text-white rounded"
-          (click)="cancelBooking()">
-    ❌ ยกเลิกการจอง
-  </button>
+    <!-- QR Code -->
+    <div class="qr-zone text-center">
+      <img src="http://localhost:8000/storage/payment/qr-code.jpg"
+           alt="QR to pay" width="250" class="border mx-auto"/>
+      <p class="mt-2 text-sm">
+        ✔️ สแกน QR แล้วอัปโหลดสลิปภายใน <b>15 นาที</b><br>
+        ❌ หรือกด “ยกเลิกการจอง”
+      </p>
+    </div>
+
+    <!-- สถานะสลิป -->
+    <div *ngIf="slipStatus!=='none'" class="space-y-1 text-center">
+      <p>
+        สถานะสลิป:
+        <span [ngClass]="{
+          'text-yellow-600': slipStatus==='pending',
+          'text-green-600' : slipStatus==='confirmed',
+          'text-red-600'   : slipStatus==='rejected'
+        }">{{ slipStatus }}</span>
+      </p>
+      <img *ngIf="slipStatus!=='rejected'"
+           [src]="'http://localhost:8000/storage/'+slip.slip_image_url"
+           width="260" class="border mx-auto"/>
+      <p *ngIf="slipStatus==='rejected'" class="text-red-600">
+        ❌ สลิปถูกปฏิเสธ กรุณาอัปโหลดใหม่
+      </p>
+    </div>
+
+    <!-- ปุ่มอัปโหลดสลิปใหม่ -->
+    <div *ngIf="canUpload()" class="space-y-2 text-center">
+      <input type="file"
+             accept="image/*"
+             (change)="onFileSelected($event)" />
+      <div *ngIf="previewUrl" class="text-center">
+        <p>ตัวอย่าง:</p>
+        <img [src]="previewUrl" width="260" class="border mx-auto"/>
+      </div>
+      <button class="px-4 py-2 bg-green-600 text-white rounded"
+              (click)="uploadSlip()"
+              [disabled]="!selectedFile || uploading">
+        ✅ {{ slip ? 'อัปเดตสลิปใหม่' : 'อัปโหลดสลิป' }}
+      </button>
+    </div>
+
+    <!-- ปุ่มยกเลิกการจอง -->
+    <div class="text-center">
+      <button class="px-4 py-2 bg-red-500 text-white rounded"
+              (click)="cancelBooking()">
+        ❌ ยกเลิกการจอง
+      </button>
+    </div>
+  </div>
 </div>

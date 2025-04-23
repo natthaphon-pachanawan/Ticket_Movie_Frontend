@@ -1,13 +1,12 @@
-nav {
-     padding: 1rem;
-     a {
-       margin-right: 1rem;
-       text-decoration: none;
-       color: blue;
-   
-       &:hover {
-         text-decoration: underline;
-       }
-     }
-   }
-   
+:host {
+  display: block;
+}
+
+main {
+  margin-top: 45px;   // ให้ห่าง Navbar พอดี
+  padding: 1rem;
+  // ถ้าต้องการให้พื้นที่แอปเต็มจอ:
+  // height: calc(100vh - 60px);
+  // overflow: auto;
+}
+

@@ -1,33 +1,43 @@
-<!-- src/app/pages/home/home.component.html -->
+<div class="home-container">
+  <!-- Hero / Search -->
+  <section class="hero">
+    <div class="hero__search">
+      <input
+        type="text"
+        placeholder="🔍 ค้นหาชื่อหรือแนวหนัง…"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()"
+      />
+    </div>
+  </section>
 
-<h2>🎬 รายการหนังทั้งหมด</h2>
-
-<!-- ช่องค้นหา -->
-<div class="mb-4">
-  <input
-    type="text"
-    placeholder="ค้นหาชื่อหรือแนวหนัง…"
-    [(ngModel)]="searchTerm"
-    (ngModelChange)="onSearch()"
-    class="w-full border p-2 rounded"
-  />
-</div>
-
-<div *ngIf="movies.length === 0">
-  <p>ไม่มีผลลัพธ์หรือกำลังโหลดข้อมูลหนัง…</p>
-</div>
-
-<div *ngFor="let movie of movies" class="movie-card mb-6">
-  <a [routerLink]="['/movies', movie.id]" class="block hover:shadow-lg p-4 rounded border">
-    <img
-      [src]="'http://localhost:8000/storage/' + movie.poster_url"
-      alt="Poster"
-      width="200"
-      class="rounded mb-2"
-    />
-    <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
-    <p><strong>ประเภท:</strong> {{ movie.genre }}</p>
-    <p><strong>ความยาว:</strong> {{ movie.duration }} นาที</p>
-    <p class="text-blue-600 mt-1">คลิกเพื่อดูรายละเอียด</p>
-  </a>
+  <!-- Grid ของการ์ดหนัง -->
+  <section class="movie-grid">
+    <div *ngFor="let movie of movies" class="movie-card">
+      <a [routerLink]="['/movies', movie.id]">
+        <div class="movie-card__poster">
+          <img
+            [src]="'http://localhost:8000/storage/' + movie.poster_url"
+            [alt]="movie.title"
+          />
+          <div class="movie-card__overlay">
+            <h4 class="overlay-title">{{ movie.title }}</h4>
+            <div class="overlay-meta">
+              <span>🎭 {{ movie.genre }}</span>
+              <span>⏱️ {{ movie.duration }} นาที</span>
+            </div>
+            <button class="watch-more">ดูเพิ่มเติม</button>
+          </div>
+        </div>
+        <div class="movie-card__info">
+          <p class="release-date">{{ movie.release_date | date:'dd MMM yyyy' }}</p>
+          <h3>{{ movie.title }}</h3>
+          <div class="tags">
+            <span class="tag">{{ movie.genre }}</span>
+            <span class="tag">{{ movie.duration }} นาที</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
 </div>

@@ -1,26 +1,28 @@
-<nav style="display: flex; gap: 1rem; padding: 1rem; background: #f0f0f0;">
-  <button (click)="goHome()">หน้าแรก</button>
+<nav>
+  <div class="logo" (click)="goHome()">TicketMaster</div>
 
-  <span style="margin-left: auto;">
-    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']">เข้าสู่ระบบ</a>
-    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/register']">สมัครสมาชิก</a>
+  <div class="main-links" *ngIf="auth.isLoggedIn()">
+    <a (click)="goHome()"><span class="icon">🏠</span> หน้าแรก</a>
+    <a *ngIf="!auth.isAdmin()" [routerLink]="['/my-bookings']">
+      <span class="icon">🧾</span> การจองของฉัน
+    </a>
+    <a *ngIf="!auth.isAdmin()" [routerLink]="['/tickets']">
+      <span class="icon">🎟️</span> ตั๋วของฉัน
+    </a>
+    <a *ngIf="auth.isAdmin()" [routerLink]="['/admin/reports']">
+      <span class="icon">📊</span> รายงานยอดขาย
+    </a>
+  </div>
 
-    <span *ngIf="auth.isLoggedIn()">
-      👤 {{ auth.getUser()?.first_name }}
-      <a [routerLink]="['/profile']">👤 แก้ไขข้อมูล</a>
-      
-      <!-- ✅ เฉพาะ user ทั่วไป -->
-      <ng-container *ngIf="!auth.isAdmin()">
-        <a [routerLink]="['/my-bookings']">🧾 การจองของฉัน</a>
-        <a [routerLink]="['/tickets']">🎟️ ตั๋วของฉัน</a>
-      </ng-container>
-
-      <!-- ✅ เฉพาะ admin -->
-      <ng-container *ngIf="auth.isAdmin()">
-        <a [routerLink]="['/admin/reports']">📊 รายงานยอดขาย</a>
-      </ng-container>
-
-      <button (click)="logout()">ออกจากระบบ</button>
-    </span>
-  </span>
+  <div class="auth-links">
+    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']">
+      <span class="icon">🔑</span> เข้าสู่ระบบ
+    </a>
+    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/register']">
+      <span class="icon">📝</span> สมัครสมาชิก
+    </a>
+    <button *ngIf="auth.isLoggedIn()" (click)="logout()">
+      <span class="icon">🚪</span> ออกจากระบบ
+    </button>
+  </div>
 </nav>
