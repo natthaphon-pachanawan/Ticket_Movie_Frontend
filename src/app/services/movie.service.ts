@@ -28,8 +28,12 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  getMovies(): Observable<MovieResponse> {
-    return this.http.get<MovieResponse>(this.apiUrl);
+  getMovies(search?: string): Observable<MovieResponse> {
+    const params: any = {};
+    if (search && search.trim()) {
+      params.search = search.trim();
+    }
+    return this.http.get<MovieResponse>(this.apiUrl, { params });
   }
 
   getMovieById(id: number): Observable<{ data: Movie }> {

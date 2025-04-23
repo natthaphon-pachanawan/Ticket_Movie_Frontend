@@ -1,22 +1,33 @@
+<!-- src/app/pages/home/home.component.html -->
+
 <h2>🎬 รายการหนังทั้งหมด</h2>
 
-<div *ngIf="movies.length === 0">
-  <p>กำลังโหลดข้อมูลหนัง...</p>
+<!-- ช่องค้นหา -->
+<div class="mb-4">
+  <input
+    type="text"
+    placeholder="ค้นหาชื่อหรือแนวหนัง…"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearch()"
+    class="w-full border p-2 rounded"
+  />
 </div>
 
-<div *ngFor="let movie of movies" class="movie-card">
-  <!-- ลิงก์ไปหน้ารายละเอียดหนัง -->
-  <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
-     <img
-     [src]="'http://localhost:8000/storage/' + movie.poster_url"
-     alt="Poster"
-     width="200"
-     style="border-radius: 8px; margin-bottom: 10px;"
-     />
-    <h3>{{ movie.title }}</h3>
+<div *ngIf="movies.length === 0">
+  <p>ไม่มีผลลัพธ์หรือกำลังโหลดข้อมูลหนัง…</p>
+</div>
+
+<div *ngFor="let movie of movies" class="movie-card mb-6">
+  <a [routerLink]="['/movies', movie.id]" class="block hover:shadow-lg p-4 rounded border">
+    <img
+      [src]="'http://localhost:8000/storage/' + movie.poster_url"
+      alt="Poster"
+      width="200"
+      class="rounded mb-2"
+    />
+    <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
     <p><strong>ประเภท:</strong> {{ movie.genre }}</p>
     <p><strong>ความยาว:</strong> {{ movie.duration }} นาที</p>
-    <p style="color: #007bff;">คลิกเพื่อดูรายละเอียด</p>
+    <p class="text-blue-600 mt-1">คลิกเพื่อดูรายละเอียด</p>
   </a>
-  <hr />
 </div>

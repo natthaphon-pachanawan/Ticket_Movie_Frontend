@@ -28,15 +28,18 @@ interface SalesReport {
 export class AdminReportsComponent implements OnInit {
   report: SalesReport | null = null;
   loading = false;
-  fromDate = ''; 
+  fromDate = '';
   toDate   = '';
+
+  // base URL ของ API PDF
+  private pdfUrl = 'http://localhost:8000/api/reports/sales/pdf';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    const today = new Date().toISOString().slice(0,10);
+    const today = new Date().toISOString().slice(0, 10);
+    this.fromDate = today;
     this.toDate   = today;
-    this.fromDate = new Date(Date.now() - 30*86400_000).toISOString().slice(0,10);
     this.load();
   }
 
@@ -60,5 +63,15 @@ export class AdminReportsComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  /**
+   * เปิดรายงานเป็น PDF แบบ inline ใน tab ใหม่
+   */
+  exportPdf() {
+    // สร้าง query string
+    const query = `date_start=${this.fromDate}&date_end=${this.toDate}`;
+    // เปิด URL ในหน้าใหม่
+    window.open(`${this.pdfUrl}?${query}`, '_blank');
   }
 }
