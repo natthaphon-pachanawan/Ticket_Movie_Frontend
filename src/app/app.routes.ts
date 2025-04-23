@@ -36,33 +36,35 @@ export const routes: Routes = [
   { path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard] },
   { path: 'tickets', component: MyTicketsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard], children: [
-      { path: '', redirectTo: 'movies', pathMatch: 'full' },
-      { path: 'movies', component: AdminMoviesComponent },
-      // Movies
-      { path: 'movies',         component: AdminMoviesComponent },
-      { path: 'movies/create',  component: AdminMovieFormComponent },
-      { path: 'movies/edit/:id',component: AdminMovieFormComponent },
-      // Cinemas
-      { path: 'cinemas',           component: AdminCinemasComponent },
-      { path: 'cinemas/create',    component: AdminCinemaFormComponent },
-      { path: 'cinemas/edit/:id',  component: AdminCinemaFormComponent },
-      // Rooms
-      { path: 'rooms',           component: AdminRoomsComponent },
-      { path: 'rooms/create',    component: AdminRoomFormComponent },
-      { path: 'rooms/edit/:id',  component: AdminRoomFormComponent },
-      // Screenings
-      { path: 'screenings',             component: AdminScreeningsComponent },
-      { path: 'screenings/create',      component: AdminScreeningFormComponent },
-      { path: 'screenings/edit/:id',    component: AdminScreeningFormComponent },
-      // Seats
-      { path: 'seats',               component: AdminSeatsComponent },
-      { path: 'seats/create',        component: AdminSeatFormComponent },
-      { path: 'seats/edit/:id',      component: AdminSeatFormComponent },
-      // Slips
-      { path: 'slips',               component: AdminSlipsComponent },
-    ]
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, AdminGuard]
   },
+  // --- Admin CRUD ---
+  {path: 'admin/movies', component: AdminMoviesComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/movies/create', component: AdminMovieFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/movies/edit/:id', component: AdminMovieFormComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/cinemas', component: AdminCinemasComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/cinemas/create', component: AdminCinemaFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/cinemas/edit/:id', component: AdminCinemaFormComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/rooms', component: AdminRoomsComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/rooms/create', component: AdminRoomFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/rooms/edit/:id', component: AdminRoomFormComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/screenings', component: AdminScreeningsComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/screenings/create', component: AdminScreeningFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/screenings/edit/:id', component: AdminScreeningFormComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/seats', component: AdminSeatsComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/seats/create', component: AdminSeatFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'admin/seats/edit/:id', component: AdminSeatFormComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/slips', component: AdminSlipsComponent, canActivate: [AuthGuard, AdminGuard]},
+
+  {path: 'admin/reports', component: AdminReportsComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'payment', component: PaymentAndSlipComponent, canActivate:[AuthGuard] },
   { path: 'admin/reports', component: AdminReportsComponent , canActivate: [AuthGuard] }
   

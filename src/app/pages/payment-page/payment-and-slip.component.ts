@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule }  from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -11,24 +11,28 @@ import { FormsModule }  from '@angular/forms';
   templateUrl: './payment-and-slip.component.html',
   styleUrls: ['./payment-and-slip.component.scss']
 })
-export class PaymentAndSlipComponent implements OnInit {
+export class PaymentAndSlipComponent implements OnInit, OnDestroy {
   booking: any;
   loading = true;
 
   // สลิป
   slip: any = null;
-  slipStatus: 'none'|'pending'|'confirmed'|'rejected' = 'none';
+  slipStatus: 'none' | 'pending' | 'confirmed' | 'rejected' = 'none';
 
   // อัพโหลดใหม่
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   uploading = false;
 
+  // ** ตัวนับถอยหลัง **
+  remainingTime = '15:00';
+  private countdownInterval!: ReturnType<typeof setInterval>;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     const id = this.route.snapshot.queryParamMap.get('booking_id');
@@ -37,6 +41,11 @@ export class PaymentAndSlipComponent implements OnInit {
       return;
     }
     this.fetchBooking(+id);
+  }
+
+  ngOnDestroy() {
+    // เคลียร์ interval เมื่อ component ถูกทำลาย
+    clearInterval(this.countdownInterval);
   }
 
   private fetchBooking(id: number) {
@@ -48,6 +57,9 @@ export class PaymentAndSlipComponent implements OnInit {
           this.slip = this.booking.slip ?? null;
           this.slipStatus = this.slip?.payment_status ?? 'none';
           this.loading = false;
+
+          // เริ่มนับถอยหลังจาก expires_at
+          this.startCountdown();
         },
         error: () => {
           alert('❌ โหลดข้อมูลไม่สำเร็จ');
@@ -56,9 +68,42 @@ export class PaymentAndSlipComponent implements OnInit {
       });
   }
 
-  // เงื่อนไขว่าปุ่มอัปโหลดใหม่ควรโชว์ไหม
+  /** เริ่มต้นนับถอยหลัง */
+  private startCountdown() {
+    clearInterval(this.countdownInterval);
+    const expiresAt = new Date(this.booking.expires_at);
+    this.updateRemainingTime(expiresAt);
+    this.countdownInterval = setInterval(() => {
+      this.updateRemainingTime(expiresAt);
+    }, 1000);
+  }
+
+  /** คำนวณและอัปเดต remainingTime */
+  private updateRemainingTime(expiresAt: Date) {
+    const now = new Date().getTime();
+    const diffMs = expiresAt.getTime() - now;
+
+    if (diffMs <= 0) {
+      this.remainingTime = '00:00';
+      clearInterval(this.countdownInterval);
+      return;
+    }
+
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    this.remainingTime =
+      String(minutes).padStart(2, '0')
+      + ':' +
+      String(seconds).padStart(2, '0');
+  }
+
+  /** เงื่อนไขว่าปุ่มอัปโหลดใหม่ควรโชว์ไหม */
   canUpload(): boolean {
-    return this.slipStatus === 'none' || this.slipStatus === 'rejected';
+    // ถ้าสลิปสถานะยังไม่ส่งหรือถูกปฏิเสธ และยังไม่หมดเวลา
+    return (this.slipStatus === 'none' || this.slipStatus === 'rejected')
+      && this.remainingTime !== '00:00';
   }
 
   onFileSelected(ev: any) {
@@ -74,24 +119,24 @@ export class PaymentAndSlipComponent implements OnInit {
   uploadSlip() {
     if (!this.canUpload() || !this.selectedFile) return;
     const form = new FormData();
-    form.append('booking_id',   this.booking.id.toString());
+    form.append('booking_id', this.booking.id.toString());
     form.append('slip_image_url', this.selectedFile);
-    form.append('amount',       this.booking.total_price.toString());
-    form.append('payment_status','pending');
-    form.append('payment_date',  new Date().toISOString().slice(0,19).replace('T',' '));
+    form.append('amount', this.booking.total_price.toString());
+    form.append('payment_status', 'pending');
+    form.append('payment_date', new Date().toISOString().slice(0, 19).replace('T', ' '));
 
     this.uploading = true;
     const request$ = this.slip
       // ถ้ามีสลิปเดิม ให้ไปอัพเดต
       ? this.http.post(
-          `http://localhost:8000/api/slips/update/${this.slip.id}`,
-          form
-        )
+        `http://localhost:8000/api/slips/update/${this.slip.id}`,
+        form
+      )
       // ไม่มีเดิม ให้สร้างใหม่
       : this.http.post(
-          'http://localhost:8000/api/slips/create',
-          form
-        );
+        'http://localhost:8000/api/slips/create',
+        form
+      );
 
     request$.subscribe({
       next: () => {

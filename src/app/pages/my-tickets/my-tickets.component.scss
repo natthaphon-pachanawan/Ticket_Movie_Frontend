@@ -1,8 +1,58 @@
+/* src/app/pages/my-tickets/my-tickets.component.scss */
+
+/* 1) พื้นหลังหลัก และการตั้งค่าสีตัวอักษร */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #0D1117;  /* พื้นหลังหลัก */
+  color: #c9d1d9;              /* ตัวหนังสืออ่อน */
+  padding: 2rem 1rem;
+}
+
+/* 2) หัวเรื่อง */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #58A6FF;              /* accent ฟ้าอ่อน */
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* 3) ข้อความกรณียังไม่มีตั๋ว */
+.empty {
+  text-align: center;
+  font-style: italic;
+  color: #8b949e;
+  margin-top: 2rem;
+}
+
+/* 4) บรรจุภัณฑ์ของทุกตั๋ว */
 .ticket-card {
-     background-color: #f9f9f9;
-     border: 1px solid #ccc;
-     border-radius: 8px;
-     padding: 15px;
-     margin-bottom: 20px;
-   }
-   
+  background-color: #161B22;   /* โทนเดียวกับ navbar */
+  border: 1px solid #30363D;   /* ขอบเข้มเล็กน้อย */
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+  }
+
+  p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+
+    strong {
+      color: #8B949E;          /* เน้นหัวข้อแต่ละบรรทัด */
+    }
+  }
+
+  /* สถานะตั๋ว อาจจะไฮไลต์สีตามสถานะได้ */
+  .status {
+    text-transform: capitalize;
+    &.valid   { color: #2EA043; } /* เขียว */
+    &.expired { color: #D64045; } /* แดง */
+  }
+}

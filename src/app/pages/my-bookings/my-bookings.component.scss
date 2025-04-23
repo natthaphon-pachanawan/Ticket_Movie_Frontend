@@ -1,0 +1,105 @@
+/* src/app/pages/my-bookings/my-bookings.component.scss */
+
+/* 1) พื้นหลังหลัก */
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117;  /* พื้นหลังหลัก */
+     color: #c9d1d9;              /* ตัวหนังสืออ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   /* 2) หัวเรื่อง "รายการการจองของคุณ" */
+   .title,
+   .text-xl {
+     font-size: 1.25rem;
+     font-weight: 600;
+     color: #58A6FF;  /* สีฟ้าอ่อน Accent */
+     margin-bottom: 1rem;
+     text-align: center;
+   }
+   
+   /* 3) การแจ้ง “– ไม่มีรายการ –” */
+   .text-gray-500 {
+     color: #8b949e;
+     font-style: italic;
+     text-align: center;
+     margin-top: 2rem;
+   }
+   
+   /* 4) การ์ดการจองแต่ละรายการ */
+   .booking-card {
+     background-color: #161B22;  /* เข้มเหมือน navbar */
+     border: 1px solid #30363D;
+     border-radius: 8px;
+     padding: 1rem;
+     transition: box-shadow 0.2s;
+     box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+   
+     &:hover {
+       box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+     }
+   
+     p {
+       margin: 0.25rem 0;
+       font-size: 0.95rem;
+   
+       strong {
+         color: #8B949E;
+       }
+     }
+   
+     /* จัดปุ่มต่าง ๆ ให้อยู่ด้านล่าง ดูเป็นกลุ่ม */
+     .mt-2 {
+       margin-top: 0.75rem;
+     }
+   
+     /* ปุ่มยกเลิก */
+     button {
+       background: none;
+       border: none;
+       font-size: 0.9rem;
+       cursor: pointer;
+       transition: opacity 0.2s;
+   
+       &.text-red-600 {
+         color: #D64045;
+         &:hover { opacity: 0.8; }
+       }
+     }
+   
+     /* ปุ่มชำระเงิน */
+     .bg-blue-500 {
+       background-color: #238636;  /* เปลี่ยนเป็นเขียวมืดเล็กน้อยให้คอนทราสต์ */
+       color: #fff;
+       border-radius: 4px;
+       padding: 0.4rem 0.8rem;
+       font-size: 0.9rem;
+       &:hover { background-color: #2EA043; }
+     }
+   
+     /* ปุ่มดูตั๋ว */
+     .bg-green-500 {
+       background-color: #58A6FF;  /* ฟ้าอ่อน */
+       color: #0D1117;
+       border-radius: 4px;
+       padding: 0.4rem 0.8rem;
+       font-size: 0.9rem;
+       &:hover { background-color: #79C0FF; }
+     }
+   
+     /* spacing ระหว่างปุ่ม */
+     .ml-2 {
+       margin-left: 0.5rem;
+     }
+   }
+   
+   /* 5) จัด container ให้กึ่งกลางและมี gap */
+   .p-4 {
+     padding: 1rem;
+   }
+   
+   .space-y-4 > * + * {
+     margin-top: 1rem;
+   }
+   

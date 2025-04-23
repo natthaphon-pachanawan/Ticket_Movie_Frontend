@@ -1,4 +1,110 @@
-
-table { border-collapse: collapse; width:100%; }
-th,td { text-align:left; }
-button { font-size:0.75rem; }
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117; /* พื้นหลังหลัก */
+     color: #c9d1d9;             /* ตัวอักษรโทนอ่อน */
+     padding: 2rem;
+     font-family: sans-serif;
+   }
+   
+   .slips-container {
+     max-width: 1000px;
+     margin: 0 auto;
+   }
+   
+   /* Header */
+   .header {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     margin-bottom: 1rem;
+   
+     h2 {
+       font-size: 1.5rem;
+       color: #58A6FF; /* Accent ฟ้าอ่อน */
+     }
+   
+     .btn-reload {
+       background: #238636; /* เขียว */
+       color: #fff;
+       border: none;
+       padding: 0.5rem 1rem;
+       border-radius: 4px;
+       cursor: pointer;
+       transition: background 0.2s;
+       &:hover { background: #2EA043; }
+     }
+   }
+   
+   /* Loading / No Data */
+   .loading,
+   .no-data {
+     text-align: center;
+     font-style: italic;
+     color: #8B949E;
+     padding: 1rem 0;
+   }
+   
+   /* Table */
+   .slips-table {
+     width: 100%;
+     border-collapse: collapse;
+     font-size: 0.9rem;
+   
+     thead {
+       background-color: #161B22; /* สีเดียวกับ navbar */
+       th {
+         padding: 0.75rem;
+         border-bottom: 1px solid #30363D;
+         color: #c9d1d9;
+         text-align: left;
+       }
+     }
+   
+     tbody {
+       tr {
+         border-bottom: 1px solid #30363D;
+         transition: background 0.2s;
+         &:hover {
+           background-color: #161B22;
+         }
+       }
+       td {
+         padding: 0.75rem;
+         vertical-align: top;
+       }
+       .slip-img {
+         width: 90px;
+         border: 1px solid #30363D;
+         border-radius: 4px;
+       }
+       .user-movie {
+         line-height: 1.3;
+       }
+       .amount {
+         text-align: right;
+         font-weight: bold;
+       }
+       .status.pending {
+         background: #D29922;
+         color: #0D1117;
+         padding: 0.25rem 0.5rem;
+         border-radius: 3px;
+         font-size: 0.8rem;
+       }
+       .actions button {
+         margin-right: 0.5rem;
+         font-size: 0.8rem;
+         padding: 0.3rem 0.6rem;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         transition: opacity 0.2s;
+         &.btn-approve { background: #238636; color: #fff; }
+         &.btn-reject  { background: #D29922; color: #0D1117; }
+         &.btn-delete  { background: #A40E23; color: #fff; }
+         &:hover { opacity: 0.85; }
+       }
+     }
+   }
+   

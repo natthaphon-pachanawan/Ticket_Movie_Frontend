@@ -1,24 +1,53 @@
-<nav>
+<nav class="navbar">
   <div class="logo" (click)="goHome()">TicketMaster</div>
 
+  <!-- ลิงก์หลัก (logged-in user) -->
   <div class="main-links" *ngIf="auth.isLoggedIn()">
-    <a (click)="goHome()"><span class="icon">🏠</span> หน้าแรก</a>
-    <a *ngIf="!auth.isAdmin()" [routerLink]="['/my-bookings']">
+    <a (click)="goHome()">
+      <span class="icon">🏠</span> หน้าแรก
+    </a>
+    <a *ngIf="!auth.isAdmin()" routerLink="/my-bookings" routerLinkActive="active">
       <span class="icon">🧾</span> การจองของฉัน
     </a>
-    <a *ngIf="!auth.isAdmin()" [routerLink]="['/tickets']">
+    <a *ngIf="!auth.isAdmin()" routerLink="/tickets" routerLinkActive="active">
       <span class="icon">🎟️</span> ตั๋วของฉัน
     </a>
-    <a *ngIf="auth.isAdmin()" [routerLink]="['/admin/reports']">
-      <span class="icon">📊</span> รายงานยอดขาย
-    </a>
+
+    <!-- ถ้าเป็น Admin ให้โชว์ลิงก์ทั้งหมดของ Admin Dashboard -->
+    <ng-container *ngIf="auth.isAdmin()">
+      <a routerLink="/admin/reports"     routerLinkActive="active">
+        <span class="icon">📊</span> รายงานยอดขาย
+      </a>
+      <a routerLink="/admin/movies"      routerLinkActive="active">
+        <span class="icon">🎞️</span> Movies
+      </a>
+      <a routerLink="/admin/cinemas"     routerLinkActive="active">
+        <span class="icon">🏢</span> Cinemas
+      </a>
+      <a routerLink="/admin/rooms"       routerLinkActive="active">
+        <span class="icon">🎫</span> Rooms
+      </a>
+      <a routerLink="/admin/screenings"  routerLinkActive="active">
+        <span class="icon">🕒</span> Screenings
+      </a>
+      <a routerLink="/admin/seats"       routerLinkActive="active">
+        <span class="icon">💺</span> Seats
+      </a>
+      <a routerLink="/admin/slips"       routerLinkActive="active">
+        <span class="icon">🧾</span> Slips
+      </a>
+    </ng-container>
   </div>
 
+  <!-- ลิงก์ Auth -->
   <div class="auth-links">
-    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']">
+    <a *ngIf="auth.isLoggedIn()" routerLink="/profile" routerLinkActive="active">
+      <span class="icon">👤</span> โปรไฟล์
+    </a>
+    <a *ngIf="!auth.isLoggedIn()" routerLink="/login" routerLinkActive="active">
       <span class="icon">🔑</span> เข้าสู่ระบบ
     </a>
-    <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/register']">
+    <a *ngIf="!auth.isLoggedIn()" routerLink="/register" routerLinkActive="active">
       <span class="icon">📝</span> สมัครสมาชิก
     </a>
     <button *ngIf="auth.isLoggedIn()" (click)="logout()">

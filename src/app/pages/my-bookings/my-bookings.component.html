@@ -21,14 +21,6 @@
     💳 ชำระเงิน
   </button>
 
-  <!-- ปุ่มดู/อัปโหลดสลิป (ถ้ากด pay แล้วไปหน้า payment, upload-slip)
-  <a *ngIf="b.status==='active' && b.slip && b.slip.payment_status==='rejected'"
-     [routerLink]="['/upload-slip']"
-     [queryParams]="{ booking_id: b.id }"
-     class="mt-2 ml-2 px-3 py-1 bg-yellow-500 text-white rounded">
-    📤 แนบสลิปใหม่
-  </a> -->
-
   <!-- ปุ่มดูตั๋ว -->
   <button *ngIf="b.can_view_ticket" (click)="goTickets()" class="mt-2 ml-2 px-3 py-1 bg-green-500 text-white rounded">
     🎟️ ดูตั๋ว
