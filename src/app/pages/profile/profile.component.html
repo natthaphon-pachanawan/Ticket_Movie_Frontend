@@ -1,25 +1,29 @@
-<h2>👤 แก้ไขข้อมูลส่วนตัว</h2>
-<form (ngSubmit)="updateProfile()">
-  <label>ชื่อจริง:</label>
-  <input type="text" [(ngModel)]="user.first_name" name="first_name" required>
+<div class="profile-page">
+  <h2 class="page-title">👤 แก้ไขข้อมูลส่วนตัว</h2>
+  <form class="profile-form" (ngSubmit)="updateProfile()">
+    <label for="first_name">ชื่อจริง:</label>
+    <input id="first_name" type="text" [(ngModel)]="user.first_name" name="first_name" required />
 
-  <label>นามสกุล:</label>
-  <input type="text" [(ngModel)]="user.last_name" name="last_name" required>
+    <label for="last_name">นามสกุล:</label>
+    <input id="last_name" type="text" [(ngModel)]="user.last_name" name="last_name" required />
 
-  <label>เบอร์โทร:</label>
-  <input type="text" [(ngModel)]="user.phone_number" name="phone_number">
+    <label for="phone_number">เบอร์โทร:</label>
+    <input id="phone_number" type="text" [(ngModel)]="user.phone_number" name="phone_number" />
 
-  <label>วันเกิด:</label>
-  <input type="date" [(ngModel)]="user.date_of_birth" name="date_of_birth">
+    <label for="date_of_birth">วันเกิด:</label>
+    <input id="date_of_birth" type="date" [(ngModel)]="user.date_of_birth" name="date_of_birth" />
 
-  <label>เพศ:</label>
-  <select [(ngModel)]="user.gender" name="gender">
-    <option value="M">ชาย</option>
-    <option value="F">หญิง</option>
-  </select>
+    <label>เพศ:</label>
+    <div class="select-wrapper">
+      <select [(ngModel)]="user.gender" name="gender">
+        <option value="M">ชาย</option>
+        <option value="F">หญิง</option>
+      </select>
+    </div>
 
-  <button type="submit">💾 บันทึก</button>
+    <button type="submit" class="btn-save">💾 บันทึก</button>
 
-  <p *ngIf="success" style="color: green;">{{ success }}</p>
-  <p *ngIf="error" style="color: red;">{{ error }}</p>
-</form>
+    <p *ngIf="success" class="message success">{{ success }}</p>
+    <p *ngIf="error" class="message error">{{ error }}</p>
+  </form>
+</div>

@@ -1,0 +1,89 @@
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117;  /* background หลัก */
+     color: #c9d1d9;              /* ตัวอักษรหลัก */
+     padding: 2rem 1rem;
+   }
+   
+   .register-page {
+     max-width: 400px;
+     margin: 0 auto;
+   }
+   
+   .page-title {
+     font-size: 1.75rem;
+     font-weight: 600;
+     color: #58A6FF;     /* accent ฟ้าอ่อน */
+     text-align: center;
+     margin-bottom: 1.5rem;
+   }
+   
+   .auth-form {
+     background-color: #161B22;   /* กล่อง form เข้ม */
+     padding: 2rem 1.5rem;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+   
+     input,
+     select {
+       width: 100%;
+       padding: 0.75rem;
+       margin-bottom: 1rem;
+       font-size: 1rem;
+       background-color: #0D1117;  /* ฟิลด์พื้นหลังเข้ม */
+       color: #f0f0f0;
+       border: 1px solid #30363D;
+       border-radius: 4px;
+       outline: none;
+       transition: border-color 0.2s, box-shadow 0.2s;
+       display: block;         // ให้เป็น block element    
+       box-sizing: border-box;
+   
+       &::placeholder {
+         color: #565c66;
+       }
+       &:focus {
+         border-color: #58A6FF;
+         box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+       }
+     }
+   
+     /* ให้ date-picker indicator ขาว */
+     input[type="date"] {
+       &::-webkit-calendar-picker-indicator {
+         filter: brightness(0) invert(1);
+       }
+     }
+   
+     button {
+       width: 100%;
+       padding: 0.75rem;
+       font-size: 1rem;
+       font-weight: 600;
+       background-color: #58A6FF;
+       color: #0D1117;
+       border: none;
+       border-radius: 4px;
+       cursor: pointer;
+       transition: background-color 0.2s;
+       margin-top: 0.5rem;
+   
+       &:hover:not([disabled]) {
+         background-color: #1F6FEB;
+       }
+       &:disabled {
+         background-color: #30363D;
+         opacity: 0.6;
+         cursor: not-allowed;
+       }
+     }
+   
+     .error-message {
+       color: #D64045;
+       text-align: center;
+       margin-top: 1rem;
+       font-size: 0.9rem;
+     }
+   }
+   

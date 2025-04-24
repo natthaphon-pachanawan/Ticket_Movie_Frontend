@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-profile',
   imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   user: any = {};

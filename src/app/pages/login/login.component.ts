@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   email = '';
@@ -34,7 +35,7 @@ export class LoginComponent {
 
         // ถ้าเป็น admin → ไป /admin, ไม่งั้น → หน้าแรก
         if (this.auth.isAdmin()) {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/reports']);
         } else {
           this.router.navigate(['/']);
         }

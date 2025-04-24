@@ -3,7 +3,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminMoviesComponent }      from './admin/admin-movies/admin-movies.component';
 import { AdminMovieFormComponent }   from './admin/admin-movie-form/admin-movie-form.component';
 import { AdminCinemasComponent }     from './admin/admin-cinemas/admin-cinemas.component';
@@ -36,11 +35,6 @@ export const routes: Routes = [
   { path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard] },
   { path: 'tickets', component: MyTicketsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  {
-    path: 'admin',
-    component: AdminDashboardComponent,
-    canActivate: [AuthGuard, AdminGuard]
-  },
   // --- Admin CRUD ---
   {path: 'admin/movies', component: AdminMoviesComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'admin/movies/create', component: AdminMovieFormComponent, canActivate: [AuthGuard, AdminGuard]},
@@ -65,8 +59,8 @@ export const routes: Routes = [
   {path: 'admin/slips', component: AdminSlipsComponent, canActivate: [AuthGuard, AdminGuard]},
 
   {path: 'admin/reports', component: AdminReportsComponent, canActivate: [AuthGuard, AdminGuard]},
-  { path: 'payment', component: PaymentAndSlipComponent, canActivate:[AuthGuard] },
-  { path: 'admin/reports', component: AdminReportsComponent , canActivate: [AuthGuard] }
+  {path: 'payment', component: PaymentAndSlipComponent, canActivate:[AuthGuard] },
+
   
 ];
 

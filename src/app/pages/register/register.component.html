@@ -1,20 +1,31 @@
-<h2>📝 สมัครสมาชิก</h2>
+<div class="register-page">
+  <h2 class="page-title">📝 สมัครสมาชิก</h2>
 
-<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <input name="username" placeholder="ชื่อผู้ใช้" [(ngModel)]="form.username" required />
-  <input name="email" placeholder="อีเมล" type="email" [(ngModel)]="form.email" required />
-  <input name="password" placeholder="รหัสผ่าน" type="password" [(ngModel)]="form.password" required />
-  <input name="first_name" placeholder="ชื่อจริง" [(ngModel)]="form.first_name" required />
-  <input name="last_name" placeholder="นามสกุล" [(ngModel)]="form.last_name" required />
-  <input name="date_of_birth" type="date" [(ngModel)]="form.date_of_birth" />
-  <input name="phone_number" placeholder="เบอร์โทรศัพท์" [(ngModel)]="form.phone_number" />
+  <form class="auth-form" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+    <input name="username" [(ngModel)]="form.username" required placeholder="ชื่อผู้ใช้" />
 
-  <select name="gender" [(ngModel)]="form.gender">
-    <option value="M">ชาย</option>
-    <option value="F">หญิง</option>
-  </select>
+    <input name="email" type="email" [(ngModel)]="form.email" required placeholder="อีเมล" />
 
-  <button type="submit" [disabled]="registerForm.invalid">สมัครสมาชิก</button>
+    <input name="password" type="password" [(ngModel)]="form.password" required placeholder="รหัสผ่าน" />
 
-  <p *ngIf="error" style="color: red;">{{ error }}</p>
-</form>
+    <input name="first_name" [(ngModel)]="form.first_name" required placeholder="ชื่อจริง" />
+
+    <input name="last_name" [(ngModel)]="form.last_name" required placeholder="นามสกุล" />
+
+    <input name="date_of_birth" type="date" [(ngModel)]="form.date_of_birth" />
+
+    <input name="phone_number" [(ngModel)]="form.phone_number" placeholder="เบอร์โทรศัพท์" />
+
+    <select name="gender" [(ngModel)]="form.gender">
+      <option value="" disabled selected>-- เลือกเพศ --</option>
+      <option value="M">ชาย</option>
+      <option value="F">หญิง</option>
+    </select>
+
+    <button type="submit" [disabled]="registerForm.invalid">
+      สมัครสมาชิก
+    </button>
+
+    <p *ngIf="error" class="error-message">{{ error }}</p>
+  </form>
+</div>

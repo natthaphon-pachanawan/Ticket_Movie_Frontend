@@ -15,9 +15,6 @@
 
     <!-- ถ้าเป็น Admin ให้โชว์ลิงก์ทั้งหมดของ Admin Dashboard -->
     <ng-container *ngIf="auth.isAdmin()">
-      <a routerLink="/admin/reports"     routerLinkActive="active">
-        <span class="icon">📊</span> รายงานยอดขาย
-      </a>
       <a routerLink="/admin/movies"      routerLinkActive="active">
         <span class="icon">🎞️</span> Movies
       </a>

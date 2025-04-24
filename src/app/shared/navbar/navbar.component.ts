@@ -21,7 +21,7 @@ export class NavbarComponent {
   goHome() {
     // ✅ ตรวจว่าเป็นแอดมินหรือไม่
     if (this.auth.isAdmin()) {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/admin/reports']);
     } else {
       this.router.navigate(['/']);
     }

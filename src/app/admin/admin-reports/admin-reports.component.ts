@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }  from '@angular/common';
-import { HttpClient }    from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
-import { RouterModule }  from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 interface DailySummary {
   date: string;
@@ -11,8 +11,8 @@ interface DailySummary {
 }
 
 interface SalesReport {
-  from: string;
-  to: string;
+  date_start: string;
+  date_end: string;
   total_revenue: number;
   total_bookings: number;
   daily: DailySummary[];
@@ -29,27 +29,27 @@ export class AdminReportsComponent implements OnInit {
   report: SalesReport | null = null;
   loading = false;
   fromDate = '';
-  toDate   = '';
+  toDate = '';
 
   // base URL ของ API PDF
   private pdfUrl = 'http://localhost:8000/api/reports/sales/pdf';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     const today = new Date().toISOString().slice(0, 10);
     this.fromDate = today;
-    this.toDate   = today;
+    this.toDate = today;
     this.load();
   }
 
   load() {
     this.loading = true;
     const params = {
-      from: this.fromDate,
-      to:   this.toDate
+      date_start: this.fromDate,
+      date_end: this.toDate
     };
-    this.http.get<{data:SalesReport}>(
+    this.http.get<{ data: SalesReport }>(
       `http://localhost:8000/api/reports/sales`,
       { params }
     ).subscribe({

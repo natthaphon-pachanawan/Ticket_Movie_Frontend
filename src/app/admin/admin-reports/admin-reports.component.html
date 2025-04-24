@@ -1,57 +1,49 @@
-<div class="mb-4 flex items-end space-x-3">
-  <div>
-    <label>From:</label>
-    <input type="date" [(ngModel)]="fromDate" />
-  </div>
-  <div>
-    <label>To:</label>
-    <input type="date" [(ngModel)]="toDate" />
-  </div>
-  <button
-    (click)="load()"
-    class="px-4 py-2 bg-green-600 text-white rounded"
-    [disabled]="loading"
-  >
-    {{ loading ? 'Loading…' : 'Refresh' }}
-  </button>
-
-  <!-- ปุ่ม Export PDF -->
-  <button
-    (click)="exportPdf()"
-    class="px-4 py-2 bg-blue-600 text-white rounded"
-    [disabled]="loading"
-  >
-    Export PDF
-  </button>
-</div>
-
-<div *ngIf="report">
-  <div class="grid grid-cols-2 gap-4 mb-6">
-    <div class="p-4 border rounded">
-      <h3 class="font-semibold">Total Revenue</h3>
-      <p class="text-2xl">{{ report.total_revenue | number:'1.0-0' }} ฿</p>
+<div class="reports-container">
+  <div class="controls">
+    <div>
+      <label>วันที่เริ่ม:</label>
+      <input type="date" [(ngModel)]="fromDate" />
     </div>
-    <div class="p-4 border rounded">
-      <h3 class="font-semibold">Total Bookings</h3>
-      <p class="text-2xl">{{ report.total_bookings }}</p>
+    <div>
+      <label>วันที่สิ้นสุด:</label>
+      <input type="date" [(ngModel)]="toDate" />
     </div>
+    <button (click)="load()"      class="btn refresh" [disabled]="loading">
+      {{ loading ? 'Loading…' : 'Refresh' }}
+    </button>
+    <button (click)="exportPdf()" class="btn export"  [disabled]="loading">
+      Export PDF
+    </button>
   </div>
 
-  <h2 class="text-xl font-semibold mb-2">Daily Breakdown</h2>
-  <table class="w-full border-collapse text-sm">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="border px-2 py-1">Date</th>
-        <th class="border px-2 py-1">Tickets Sold</th>
-        <th class="border px-2 py-1">Revenue (฿)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let d of report.daily">
-        <td class="border px-2 py-1">{{ d.date }}</td>
-        <td class="border px-2 py-1">{{ d.tickets_sold }}</td>
-        <td class="border px-2 py-1">{{ d.revenue | number:'1.0-0' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-container *ngIf="report">
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Total Revenue</h3>
+        <p>{{ report.total_revenue | number:'1.0-0' }} ฿</p>
+      </div>
+      <div class="card">
+        <h3>Total Bookings</h3>
+        <p>{{ report.total_bookings }}</p>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-2">Daily Breakdown</h2>
+    <table class="breakdown-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Tickets Sold</th>
+          <th>Revenue (฿)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of report.daily">
+          <td>{{ d.date }}</td>
+          <td>{{ d.tickets_sold }}</td>
+          <td>{{ d.revenue | number:'1.0-0' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
 </div>

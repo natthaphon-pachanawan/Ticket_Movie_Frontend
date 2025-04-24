@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   imports: [CommonModule, FormsModule],
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   form = {
