@@ -1,0 +1,87 @@
+/* admin-cinema-form.component.scss */
+
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117;  /* พื้นหลังหลัก */
+     color: #c9d1d9;              /* ตัวหนังสือหลักอ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   .page-title {
+     font-size: 1.75rem;
+     font-weight: 600;
+     color: #58A6FF;   /* accent ฟ้าอ่อน */
+     text-align: center;
+     margin-bottom: 1.5rem;
+   }
+   
+   /* กล่อง form */
+   .form-container form {
+     max-width: 700px;
+     margin: 0 auto;
+     background-color: #161B22; /* กล่องเข้มเหมือน navbar */
+     padding: 2rem;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+   }
+   
+   /* ป้าย label */
+   label {
+     display: block;
+     margin-bottom: 0.25rem;
+     font-weight: 500;
+     color: #8B949E;
+   }
+   
+   /* อินพุต/เซเล็กต์ */
+   input,
+   select {
+     width: 100%;
+     padding: 0.5rem 0.75rem;
+     margin-bottom: 1rem;
+     background-color: #0D1117;
+     color: #f0f0f0;
+     border: 1px solid #30363D;
+     border-radius: 4px;
+     font-size: 1rem;
+     outline: none;
+     transition: border-color 0.2s, box-shadow 0.2s;
+     box-sizing: border-box;
+   }
+   input:focus,
+   select:focus {
+     border-color: #58A6FF;
+     box-shadow: 0 0 0 2px rgba(88,166,255,0.25);
+   }
+   
+   /* กริด 3 คอลัมน์ / 2 คอลัมน์ */
+   .grid-cols-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+   .grid-cols-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+   
+   /* ปุ่ม submit */
+   .btn-submit {
+     display: inline-block;
+     background-color: #16A34A; /* green-600 */
+     color: #fff;
+     padding: 0.75rem 1.5rem;
+     font-size: 1rem;
+     font-weight: 600;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     transition: background-color 0.2s;
+     margin-top: 0.5rem;
+   }
+   .btn-submit:hover:not([disabled]) {
+     background-color: #15803D;
+   }
+   .btn-submit:disabled {
+     background-color: #30363D;
+     opacity: 0.6;
+     cursor: not-allowed;
+   }
+   
+   /* spacing */
+   .space-y-4 > * + * { margin-top: 1rem; }
+   

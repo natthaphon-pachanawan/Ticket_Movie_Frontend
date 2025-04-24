@@ -1,0 +1,140 @@
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117; /* พื้นหลังหลัก */
+     color: #c9d1d9;             /* ตัวหนังสือหลักอ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   /* หัวเรื่อง */
+   .page-title {
+     font-size: 1.75rem;
+     font-weight: 600;
+     color: #58A6FF;    /* accent ฟ้าอ่อน */
+     margin-bottom: 1.5rem;
+     text-align: center;
+   
+     i.fa-film {
+       margin-right: 0.5rem;
+       color: #e6c07b;
+     }
+   }
+   
+   /* กล่อง form */
+   .form-container {
+     max-width: 800px;
+     margin: 0 auto;
+     background-color: #161B22; /* กล่องเข้มเหมือน navbar */
+     padding: 2rem;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+   
+     label {
+       display: block;
+       margin-bottom: 0.25rem;
+       font-weight: 500;
+       color: #8B949E;  /* ป้าย label อ่อน */
+     }
+   
+     input[type="date"] {
+      &::-webkit-calendar-picker-indicator {
+        filter: brightness(0) invert(1);
+      }
+      &::-moz-calendar-picker-indicator {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+     input[type="text"],
+     input[type="number"],
+     input[type="date"],
+     textarea {
+       width: 100%;
+       padding: 0.5rem 0.75rem;
+       margin-bottom: 1rem;
+       background-color: #0D1117;
+       color: #f0f0f0;
+       border: 1px solid #30363D;
+       border-radius: 4px;
+       font-size: 1rem;
+       outline: none;
+       transition: border-color 0.2s, box-shadow 0.2s;
+       box-sizing: border-box;
+   
+       &:focus {
+         border-color: #58A6FF;
+         box-shadow: 0 0 0 2px rgba(88,166,255,0.25);
+       }
+     }
+   
+     textarea {
+       min-height: 120px;
+       resize: vertical;
+     }
+   
+     /* กริด 2 คอลัมน์ */
+     .two-col {
+       display: grid;
+       grid-template-columns: 1fr 1fr;
+       gap: 1rem;
+     }
+   
+     /* ปุ่ม file + preview */
+     .file-input {
+       margin-bottom: 1rem;
+   
+       input[type="file"] {
+         display: block;
+         margin-top: 0.5rem;
+         color: #c9d1d9;
+         font-size: 0.95rem;
+       }
+   
+       .preview {
+         margin-top: 0.75rem;
+   
+         img {
+           max-width: 100%;
+           border: 1px solid #30363D;
+           border-radius: 4px;
+           /* fade-in */
+           opacity: 0;
+           animation: fadeIn 0.4s forwards;
+         }
+       }
+     }
+   
+     /* ปุ่ม submit */
+     .btn-submit {
+       display: inline-flex;
+       align-items: center;
+       background-color: #16A34A; /* green-600 */
+       color: #fff;
+       padding: 0.75rem 1.5rem;
+       font-size: 1rem;
+       font-weight: 600;
+       border: none;
+       border-radius: 4px;
+       cursor: pointer;
+       transition: background-color 0.2s;
+   
+       i.fa-plus-circle, i.fa-save {
+         margin-right: 0.5rem;
+       }
+   
+       &:hover:not([disabled]) {
+         background-color: #15803D; /* darken green */
+       }
+       &:disabled {
+         background-color: #30363D;
+         opacity: 0.6;
+         cursor: not-allowed;
+       }
+     }
+   }
+   
+   /* fade-in keyframes */
+   @keyframes fadeIn {
+     to { opacity: 1; }
+   }
+   

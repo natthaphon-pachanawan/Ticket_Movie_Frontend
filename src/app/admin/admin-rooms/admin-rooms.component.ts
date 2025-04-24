@@ -9,6 +9,11 @@ interface ScreeningRoom {
   room_name: string;
   seat_capacity: number;
   description?: string;
+  cinema: {           // เพิ่งเพิ่มตรงนี้
+    id: number;
+    name: string;
+    // ถ้าจำเป็นต้องใช้ข้อมูลอื่นก็เติมได้
+  };
 }
 
 @Component({

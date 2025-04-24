@@ -1,0 +1,181 @@
+:host {
+     display: block;
+     min-height: 100vh;
+     padding: 2rem 1rem;
+     background-color: #0D1117;  // พื้นหลังหลัก
+     color: #c9d1d9;              // ตัวหนังสือหลักอ่อน
+     box-sizing: border-box;
+   
+     /* หัวเรื่อง */
+     h2 {
+       font-size: 1.5rem;
+       font-weight: 600;
+       color: #58A6FF;  // accent ฟ้าอ่อน
+       margin-bottom: 1.5rem;
+       text-align: center;
+     }
+   
+     /* [1] โหมดเลือก single / bulk (dropdown) */
+     .mode-select {
+       margin-bottom: 1.5rem;
+   
+       label {
+         display: block;
+         margin-bottom: 0.25rem;
+         color: #8B949E;
+         font-weight: 500;
+       }
+   
+       select {
+         width: 100%;
+         padding: 0.5rem 0.75rem;
+         background-color: #161B22;  // เหมือน navbar
+         color: #f0f0f0;
+         border: 1px solid #30363D;
+         border-radius: 4px;
+         font-size: 1rem;
+         outline: none;
+         transition: border-color 0.2s, box-shadow 0.2s;
+   
+         &:focus {
+           border-color: #58A6FF;
+           box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+         }
+       }
+     }
+   
+     /* กริด 2 คอลัมน์ */
+     .grid-2 {
+       display: grid;
+       grid-template-columns: repeat(2, 1fr);
+       gap: 1rem;
+     }
+   
+     /* [3] ฟอร์ม Add/Edit */
+     form {
+       background-color: #161B22;  // กล่องฟอร์มเข้ม
+       padding: 1.5rem;
+       border-radius: 8px;
+       box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+   
+       > div:not(.bulk-preview) {
+         margin-bottom: 1rem;
+       }
+   
+       label {
+         display: block;
+         margin-bottom: 0.25rem;
+         color: #8B949E;
+         font-weight: 500;
+       }
+   
+       input,
+       select,
+       textarea {
+         width: 100%;
+         padding: 0.5rem 0.75rem;
+         background-color: #0D1117; // พื้นหลัง field เข้ม
+         color: #f0f0f0;
+         border: 1px solid #30363D;
+         border-radius: 4px;
+         font-size: 1rem;
+         outline: none;
+         transition: border-color 0.2s, box-shadow 0.2s;
+         box-sizing: border-box;
+   
+         &:focus {
+           border-color: #58A6FF;
+           box-shadow: 0 0 0 2px rgba(88,166,255,0.25);
+         }
+       }
+   
+       textarea {
+         resize: vertical;
+         min-height: 80px;
+       }
+   
+       input[type="checkbox"] {
+         width: auto;
+         margin-left: 1rem;
+       }
+   
+       /* [4] Preview ใน Bulk mode */
+       .preview-controls {
+         margin-bottom: 0.75rem;
+         label {
+           color: #8B949E;
+           margin-right: 0.5rem;
+         }
+         select {
+           background-color: #161B22;
+           color: #f0f0f0;
+           border: 1px solid #30363D;
+         }
+       }
+   
+       .bulk-preview {
+         margin-top: 1rem;
+   
+         h3 {
+           color: #58A6FF;
+           font-weight: 500;
+           margin-bottom: 0.5rem;
+         }
+   
+         .preview-grid {
+           display: grid;
+           gap: 0.5rem;
+   
+           .seat-cell {
+             padding: 0.75rem 0.5rem;
+             border: 1px solid #30363D;
+             background-color: #161B22;
+             color: #f0f0f0;
+             text-align: center;
+             cursor: pointer;
+             border-radius: 4px;
+             transition: background 0.2s, border-color 0.2s;
+   
+             &.selected {
+               background-color: #0D1117;
+               border-color: #58A6FF;
+             }
+   
+             .seat-number {
+               font-weight: 600;
+             }
+             .seat-type {
+               margin-top: 0.25rem;
+               color: #8B949E;
+               font-size: 0.85rem;
+             }
+           }
+         }
+       }
+   
+       /* ปุ่ม Submit */
+       button[type="submit"] {
+         display: inline-block;
+         background-color: #16A34A; /* green-600 */
+         color: #fff;
+         padding: 0.75rem 1.5rem;
+         font-size: 1rem;
+         font-weight: 600;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         transition: background-color 0.2s;
+   
+         &:hover:not(:disabled) {
+           background-color: #15803D; /* darken green */
+         }
+   
+         &:disabled {
+           background-color: #30363D;
+           opacity: 0.6;
+           cursor: not-allowed;
+         }
+       }
+     }
+   }
+   

@@ -1,0 +1,93 @@
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117; /* พื้นหลังหลัก */
+     color: #c9d1d9;             /* ตัวหนังสือหลักอ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   // กล่อง form
+   .form-container {
+     max-width: 600px;
+     margin: 0 auto;
+     background-color: #161B22; // เหมือนสี navbar
+     padding: 2rem;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+   
+     // หัวเรื่อง
+     .page-title {
+       font-size: 1.75rem;
+       font-weight: 600;
+       color: #58A6FF;  // accent ฟ้า
+       text-align: center;
+       margin-bottom: 1.5rem;
+     }
+   
+     // ฟอร์มแต่ละ field
+     .screening-form {
+       display: flex;
+       flex-direction: column;
+       gap: 1rem;
+   
+       .field {
+         display: flex;
+         flex-direction: column;
+   
+         label {
+           margin-bottom: 0.25rem;
+           font-weight: 500;
+           color: #8B949E;
+         }
+   
+         select,
+         input {
+           padding: 0.5rem 0.75rem;
+           background-color: #0D1117; /* ฟิลด์เข้ม */
+           color: #f0f0f0;
+           border: 1px solid #30363D;
+           border-radius: 4px;
+           font-size: 1rem;
+           outline: none;
+           transition: border-color 0.2s, box-shadow 0.2s;
+   
+           &:focus {
+             border-color: #58A6FF;
+             box-shadow: 0 0 0 2px rgba(88,166,255,0.25);
+           }
+         }
+       }
+   
+       // ปุ่ม submit
+       .btn-submit {
+         align-self: flex-end;
+         background-color: #16A34A; // green-600
+         color: #fff;
+         padding: 0.75rem 1.5rem;
+         font-size: 1rem;
+         font-weight: 600;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         transition: background-color 0.2s;
+   
+         &:hover:not([disabled]) {
+           background-color: #15803D; // เข้มขึ้น
+         }
+         &:disabled {
+           background-color: #30363D;
+           opacity: 0.6;
+           cursor: not-allowed;
+         }
+       }
+     }
+   }
+   input[type="datetime-local"] {
+     &::-webkit-calendar-picker-indicator {
+       filter: brightness(0) invert(1);
+     }
+     &::-moz-calendar-picker-indicator {
+       filter: brightness(0) invert(1);
+     }
+   }
+   

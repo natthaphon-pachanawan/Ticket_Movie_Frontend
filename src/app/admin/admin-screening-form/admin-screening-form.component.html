@@ -1,66 +1,45 @@
-<h2 class="text-xl font-semibold mb-4">
-     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Screening
-   </h2>
-   
-   <form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
-     <div>
-       <label class="block mb-1">Movie</label>
-       <select
-         name="movie_id"
-         [(ngModel)]="screening.movie_id"
-         required
-         class="w-full border p-2"
-       >
-         <option [ngValue]="null">-- Select Movie --</option>
-         <option *ngFor="let m of movies" [ngValue]="m.id">
-           {{ m.title }}
-         </option>
-       </select>
-     </div>
-   
-     <div>
-       <label class="block mb-1">Screening Room</label>
-       <select
-         name="screening_room_id"
-         [(ngModel)]="screening.screening_room_id"
-         required
-         class="w-full border p-2"
-       >
-         <option [ngValue]="null">-- Select Room --</option>
-         <option *ngFor="let r of rooms" [ngValue]="r.id">
-           {{ r.cinema.name }} / {{ r.room_name }}
-         </option>
-       </select>
-     </div>
-   
-     <div>
-       <label class="block mb-1">Date & Time</label>
-       <input
-         name="screening_datetime"
-         type="datetime-local"
-         [(ngModel)]="screening.screening_datetime"
-         required
-         class="w-full border p-2"
-       />
-     </div>
-   
-     <div>
-       <label class="block mb-1">Price</label>
-       <input
-         name="price"
-         type="number"
-         [(ngModel)]="screening.price"
-         required
-         class="w-full border p-2"
-       />
-     </div>
-   
-     <button
-       type="submit"
-       [disabled]="f.invalid"
-       class="px-4 py-2 bg-green-600 text-white rounded"
-     >
-       {{ isEdit ? 'Update' : 'Create' }}
-     </button>
-   </form>
-   
+<div class="form-container">
+  <h2 class="page-title">
+    {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Screening
+  </h2>
+
+  <form (ngSubmit)="save()" #f="ngForm" class="screening-form">
+    <!-- Movie -->
+    <div class="field">
+      <label>Movie</label>
+      <select name="movie_id" [(ngModel)]="screening.movie_id" required>
+        <option [ngValue]="null" disabled>-- เลือกภาพยนตร์ --</option>
+        <option *ngFor="let m of movies" [ngValue]="m.id">
+          {{ m.title }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Screening Room -->
+    <div class="field">
+      <label>Screening Room</label>
+      <select name="screening_room_id" [(ngModel)]="screening.screening_room_id" required>
+        <option [ngValue]="null" disabled>-- เลือกห้องฉาย --</option>
+        <option *ngFor="let r of rooms" [ngValue]="r.id">
+          {{ r.cinema.name }} / {{ r.room_name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Date & Time -->
+    <div class="field">
+      <label>Date &amp; Time</label>
+      <input name="screening_datetime" type="datetime-local" [(ngModel)]="screening.screening_datetime" required />
+    </div>
+
+    <!-- Price -->
+    <div class="field">
+      <label>Price (฿)</label>
+      <input name="price" type="number" min="0" [(ngModel)]="screening.price" required />
+    </div>
+
+    <button type="submit" [disabled]="f.invalid" class="btn-submit">
+      {{ isEdit ? 'Update' : 'Create' }}
+    </button>
+  </form>
+</div>

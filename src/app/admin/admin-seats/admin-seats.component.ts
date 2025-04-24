@@ -7,6 +7,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 interface Room {
   id: number;
   room_name: string;
+  cinema: {
+    id: number;
+    name: string;
+  }
 }
 
 interface Seat {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { CommonModule }       from '@angular/common';
+import { FormsModule }        from '@angular/forms';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -12,7 +12,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrls: ['./admin-movie-form.component.scss']
 })
 export class AdminMovieFormComponent implements OnInit {
-  isEdit = false;
   movie: any = {
     title: '',
     description: '',
@@ -21,54 +20,67 @@ export class AdminMovieFormComponent implements OnInit {
     cast: '',
     duration: null,
     release_date: '',
-    poster_url: null
+    poster_url: ''
   };
+  isEdit = false;
+  previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
-  previewUrl: string | null = null;
 
   constructor(
-    private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
       this.http.get<{ data: any }>(`http://localhost:8000/api/movies/detail/${id}`)
-        .subscribe(res => this.movie = res.data);
+        .subscribe(res => {
+          this.movie = res.data;
+          // ฝั่ง poster_url นำไป preview
+          this.previewUrl = `http://localhost:8000/storage/${this.movie.poster_url}`;
+        });
     }
   }
 
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0] || null;
-    if (this.selectedFile) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = e => this.previewUrl = (e.target as any).result;
-      reader.readAsDataURL(this.selectedFile);
+      reader.readAsDataURL(file);
     }
   }
 
   save() {
-    const formData = new FormData();
-    formData.append('title', this.movie.title);
-    formData.append('description', this.movie.description);
-    formData.append('genre', this.movie.genre);
-    formData.append('director', this.movie.director);
-    formData.append('cast', this.movie.cast);
-    formData.append('duration', this.movie.duration);
-    formData.append('release_date', this.movie.release_date);
+    const form = new FormData();
+    form.append('title', this.movie.title);
+    form.append('description', this.movie.description);
+    form.append('genre', this.movie.genre);
+    form.append('director', this.movie.director);
+    form.append('cast', this.movie.cast);
+    form.append('duration', this.movie.duration);
+    form.append('release_date', this.movie.release_date);
     if (this.selectedFile) {
-      formData.append('poster_url', this.selectedFile);
+      form.append('poster_url', this.selectedFile);
     }
 
     const url = this.isEdit
       ? `http://localhost:8000/api/movies/update/${this.movie.id}`
       : 'http://localhost:8000/api/movies/create';
 
-    this.http.post(url, formData).subscribe(() => {
-      this.router.navigate(['/admin/movies']);
+    this.http.post(url, form).subscribe({
+      next: () => {
+        alert('บันทึกสำเร็จ!');
+        this.router.navigate(['/admin/movies']);
+      },
+      error: err => {
+        console.error(err);
+        alert('เกิดข้อผิดพลาดในการบันทึก');
+      }
     });
   }
 }

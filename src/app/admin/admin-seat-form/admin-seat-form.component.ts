@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }    from '@angular/common';
-import { FormsModule }     from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -9,7 +9,7 @@ interface PreviewSeat {
   column: number;
   seat_number: string;
   include: boolean;
-  seat_type: 'regular'|'VIP';
+  seat_type: 'regular' | 'VIP';
 }
 
 @Component({
@@ -53,7 +53,7 @@ export class AdminSeatFormComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     // 1) ดึง room_id
@@ -98,7 +98,7 @@ export class AdminSeatFormComponent implements OnInit {
     this.bulk.bulk_columns = cols;
     this.bulk.bulk_rows = rows;
     this.bulk.start_row = 1;
-    this.bulk.prefix = ''; 
+    this.bulk.prefix = '';
   }
 
   /** สร้าง previewSeats ทุกครั้งที่ปรับ bulk */

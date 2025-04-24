@@ -1,0 +1,94 @@
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117; /* พื้นหลังหลัก */
+     color: #c9d1d9;             /* ตัวอักษรหลักอ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   /* หัวเรื่อง */
+   .page-title {
+     text-align: center;
+     margin-bottom: 1.5rem;
+     font-size: 1.75rem;
+     font-weight: 600;
+     color: #58A6FF; /* accent ฟ้าอ่อน */
+   }
+   
+   /* กล่อง form */
+   .form-container {
+     max-width: 500px;
+     margin: 0 auto;
+     background-color: #161B22; /* กล่องเข้มเหมือน navbar */
+     padding: 2rem;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+   
+     .room-form {
+       display: flex;
+       flex-direction: column;
+       gap: 1.25rem;
+   
+       .form-group {
+         display: flex;
+         flex-direction: column;
+   
+         label {
+           margin-bottom: 0.5rem;
+           font-weight: 500;
+           color: #8B949E; /* ป้าย label อ่อน */
+         }
+   
+         input,
+         select,
+         textarea {
+           padding: 0.5rem 0.75rem;
+           background-color: #0D1117;
+           color: #f0f0f0;
+           border: 1px solid #30363D;
+           border-radius: 4px;
+           font-size: 1rem;
+           outline: none;
+           transition: border-color 0.2s, box-shadow 0.2s;
+           width: 100%;
+           box-sizing: border-box;
+   
+           &:focus {
+             border-color: #58A6FF;
+             box-shadow: 0 0 0 2px rgba(88,166,255,0.25);
+           }
+   
+           &::placeholder {
+             color: #565c66;
+           }
+         }
+   
+         textarea {
+           resize: vertical;
+         }
+       }
+   
+       .btn-submit {
+         align-self: flex-end;
+         background-color: #16A34A; /* green-600 */
+         color: #fff;
+         padding: 0.6rem 1.2rem;
+         font-size: 1rem;
+         font-weight: 600;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         transition: background-color 0.2s;
+   
+         &:hover:not([disabled]) {
+           background-color: #15803D; /* darken green */
+         }
+         &:disabled {
+           background-color: #30363D;
+           opacity: 0.6;
+           cursor: not-allowed;
+         }
+       }
+     }
+   }
+   

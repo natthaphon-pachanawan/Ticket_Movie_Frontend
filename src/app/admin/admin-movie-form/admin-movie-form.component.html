@@ -1,92 +1,68 @@
-<h2 class="text-xl font-semibold mb-4">
-     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Movie
-   </h2>
-   
-   <form (ngSubmit)="save()" #f="ngForm" enctype="multipart/form-data">
-     <div class="mb-2">
-       <label class="block mb-1">Title</label>
-       <input
-         name="title"
-         [(ngModel)]="movie.title"
-         required
-         class="border p-1 w-full"
-       />
-     </div>
-   
-     <div class="mb-2">
-       <label class="block mb-1">Description</label>
-       <textarea
-         name="description"
-         [(ngModel)]="movie.description"
-         class="border p-1 w-full"
-       ></textarea>
-     </div>
-   
-     <div class="mb-2 grid grid-cols-2 gap-4">
-       <div>
-         <label class="block mb-1">Genre</label>
-         <input
-           name="genre"
-           [(ngModel)]="movie.genre"
-           required
-           class="border p-1 w-full"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">Director</label>
-         <input
-           name="director"
-           [(ngModel)]="movie.director"
-           class="border p-1 w-full"
-         />
-       </div>
-     </div>
-   
-     <div class="mb-2 grid grid-cols-2 gap-4">
-       <div>
-         <label class="block mb-1">Cast</label>
-         <input
-           name="cast"
-           [(ngModel)]="movie.cast"
-           class="border p-1 w-full"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">Duration (min.)</label>
-         <input
-           name="duration"
-           type="number"
-           [(ngModel)]="movie.duration"
-           class="border p-1 w-full"
-         />
-       </div>
-     </div>
-   
-     <div class="mb-2">
-       <label class="block mb-1">Release Date</label>
-       <input
-         name="release_date"
-         type="date"
-         [(ngModel)]="movie.release_date"
-         required
-         class="border p-1 w-full"
-       />
-     </div>
-   
-     <div class="mb-4">
-       <label class="block mb-1">Poster Image</label>
-       <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-       <div *ngIf="previewUrl" class="mt-2">
-         <img [src]="previewUrl" width="200" alt="Preview" />
-       </div>
-     </div>
-   
-     <button
-       type="submit"
-       [disabled]="f.invalid"
-       class="px-4 py-2 bg-green-500 text-white rounded"
-     >
-       {{ isEdit ? 'Update' : 'Create' }}
-     </button>
-   </form>
-   
+<h2 class="page-title">
+  <i class="fa fa-film"></i>
+  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Movie
+</h2>
+
+<div class="form-container">
+  <form (ngSubmit)="save()" #f="ngForm" enctype="multipart/form-data">
+    <!-- Title -->
+    <label>Title</label>
+    <input name="title" type="text" [(ngModel)]="movie.title" required />
+
+    <!-- Description -->
+    <label>Description</label>
+    <textarea name="description" [(ngModel)]="movie.description"></textarea>
+
+    <!-- Genre + Director -->
+    <div class="two-col">
+      <div>
+        <label>Genre</label>
+        <input name="genre" type="text" [(ngModel)]="movie.genre" required />
+      </div>
+      <div>
+        <label>Director</label>
+        <input name="director" type="text" [(ngModel)]="movie.director" />
+      </div>
+    </div>
+
+    <!-- Cast + Duration -->
+    <div class="two-col">
+      <div>
+        <label>Cast</label>
+        <input name="cast" type="text" [(ngModel)]="movie.cast" />
+      </div>
+      <div>
+        <label>Duration (min.)</label>
+        <input name="duration" type="number" [(ngModel)]="movie.duration" />
+      </div>
+    </div>
+
+    <!-- Release Date -->
+    <label>Release Date</label>
+    <input name="release_date"
+           type="date"
+           [(ngModel)]="movie.release_date"
+           required />
+
+    <!-- Poster Image -->
+    <div class="file-input">
+      <label for="poster">Poster Image</label>
+      <input id="poster"
+             type="file"
+             (change)="onFileSelected($event)"
+             accept="image/*" />
+      <div *ngIf="previewUrl" class="preview">
+        <img [src]="previewUrl" alt="Preview" />
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit"
+            [disabled]="f.invalid"
+            class="btn-submit">
+      <i class="fa"
+         [ngClass]="isEdit ? 'fa-save' : 'fa-plus-circle'"></i>
+      {{ isEdit ? 'Update' : 'Create' }}
+    </button>
+  </form>
+</div>

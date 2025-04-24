@@ -1,87 +1,106 @@
-<h2 class="text-xl font-semibold mb-4">
-     {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Cinema
-   </h2>
-   
-   <form (ngSubmit)="save()" #f="ngForm" class="space-y-4">
-     <div>
-       <label class="block mb-1">Name</label>
-       <input
-         name="name"
-         [(ngModel)]="cinema.name"
-         required
-         class="w-full border p-2"
-       />
-     </div>
-   
-     <div>
-       <label class="block mb-1">Address</label>
-       <input
-         name="address"
-         [(ngModel)]="cinema.address"
-         required
-         class="w-full border p-2"
-       />
-     </div>
-   
-     <div class="grid grid-cols-3 gap-4">
-       <div>
-         <label class="block mb-1">Province ID</label>
-         <input
-           name="province_id"
-           type="number"
-           [(ngModel)]="cinema.province_id"
-           required
-           class="w-full border p-2"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">District ID</label>
-         <input
-           name="district_id"
-           type="number"
-           [(ngModel)]="cinema.district_id"
-           required
-           class="w-full border p-2"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">Subdistrict ID</label>
-         <input
-           name="subdistrict_id"
-           type="number"
-           [(ngModel)]="cinema.subdistrict_id"
-           required
-           class="w-full border p-2"
-         />
-       </div>
-     </div>
-   
-     <div class="grid grid-cols-2 gap-4">
-       <div>
-         <label class="block mb-1">Contact Phone</label>
-         <input
-           name="contact_phone"
-           [(ngModel)]="cinema.contact_phone"
-           class="w-full border p-2"
-         />
-       </div>
-       <div>
-         <label class="block mb-1">Contact Email</label>
-         <input
-           name="contact_email"
-           type="email"
-           [(ngModel)]="cinema.contact_email"
-           class="w-full border p-2"
-         />
-       </div>
-     </div>
-   
-     <button
-       type="submit"
-       [disabled]="f.invalid"
-       class="px-4 py-2 bg-green-600 text-white rounded"
-     >
-       {{ isEdit ? 'Update' : 'Create' }}
-     </button>
-   </form>
-   
+<h2 class="page-title">
+  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Cinema
+</h2>
+
+<div class="form-container">
+  <form (ngSubmit)="save()" #f="ngForm" class="cinema-form">
+
+    <!-- ชื่อโรงหนัง -->
+    <label>ชื่อโรงภาพยนตร์</label>
+    <input
+      name="name"
+      [(ngModel)]="cinema.name"
+      required
+      placeholder="เช่น Major Cineplex"
+    />
+
+    <!-- ที่อยู่ -->
+    <label>ที่อยู่</label>
+    <input
+      name="address"
+      [(ngModel)]="cinema.address"
+      required
+      placeholder="เลขที่/ถนน/แขวง..."
+    />
+
+    <!-- จังหวัด / อำเภอ / ตำบล -->
+    <div class="grid grid-cols-3 gap-4">
+      <!-- Province -->
+      <div>
+        <label>จังหวัด</label>
+        <select
+          name="province_id"
+          [(ngModel)]="cinema.province_id"
+          (change)="onProvinceChange()"
+          required
+        >
+          <option value="">— เลือกจังหวัด —</option>
+          <option *ngFor="let p of provinces" [value]="p.id">
+            {{ p.name_th }}
+          </option>
+        </select>
+      </div>
+      <!-- District -->
+      <div>
+        <label>อำเภอ</label>
+        <select
+          name="district_id"
+          [(ngModel)]="cinema.district_id"
+          (change)="onDistrictChange()"
+          [disabled]="!cinema.province_id"
+          required
+        >
+          <option value="">— เลือกอำเภอ —</option>
+          <option *ngFor="let d of districts" [value]="d.id">
+            {{ d.name_th }}
+          </option>
+        </select>
+      </div>
+      <!-- Subdistrict -->
+      <div>
+        <label>ตำบล</label>
+        <select
+          name="subdistrict_id"
+          [(ngModel)]="cinema.subdistrict_id"
+          [disabled]="!cinema.district_id"
+          required
+        >
+          <option value="">— เลือกตำบล —</option>
+          <option *ngFor="let s of subdistricts" [value]="s.id">
+            {{ s.name_th }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- เบอร์ติดต่อ / อีเมล -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label>เบอร์โทรศัพท์</label>
+        <input
+          name="contact_phone"
+          [(ngModel)]="cinema.contact_phone"
+          placeholder="08x-xxx-xxxx"
+        />
+      </div>
+      <div>
+        <label>อีเมล</label>
+        <input
+          name="contact_email"
+          type="email"
+          [(ngModel)]="cinema.contact_email"
+          placeholder="email@example.com"
+        />
+      </div>
+    </div>
+
+    <!-- ปุ่มบันทึก -->
+    <button
+      type="submit"
+      [disabled]="f.invalid"
+      class="btn-submit"
+    >
+      {{ isEdit ? 'Update' : 'Create' }}
+    </button>
+  </form>
+</div>

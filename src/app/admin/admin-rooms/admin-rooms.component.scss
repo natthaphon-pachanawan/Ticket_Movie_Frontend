@@ -1,0 +1,98 @@
+/* admin-rooms.component.scss */
+
+:host {
+     display: block;
+     min-height: 100vh;
+     background-color: #0D1117; /* พื้นหลังหลัก */
+     color: #c9d1d9;             /* ตัวหนังสือหลักอ่อน */
+     padding: 2rem 1rem;
+   }
+   
+   /* บรรทัดหัว + ปุ่ม */
+   :host ::ng-deep .flex.justify-between {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1rem;
+   
+     h2 {
+       font-size: 1.5rem;
+       font-weight: 600;
+       color: #58A6FF; /* accent ฟ้าอ่อน */
+     }
+   
+     button {
+       background-color: #2563EB; /* blue-600 เข้มขึ้นนิด */
+       color: #fff;
+       padding: 0.5rem 1rem;
+       border-radius: 4px;
+       font-size: 0.95rem;
+       font-weight: 500;
+       transition: background-color 0.2s;
+   
+       &:hover {
+         background-color: #1D4ED8;
+       }
+     }
+   }
+   
+   /* ตาราง */
+   :host ::ng-deep table {
+     width: 100%;
+     border-collapse: collapse;
+     font-size: 0.95rem;
+     background: #161B22; /* header/bg เหมือน navbar */
+     border: 1px solid #30363D;
+   }
+   
+   :host ::ng-deep thead tr {
+     background-color: #161B22;
+   }
+   
+   :host ::ng-deep th,
+   :host ::ng-deep td {
+     border: 1px solid #30363D;
+     padding: 0.5rem;
+     text-align: left;
+     color: #c9d1d9;
+   }
+   
+   :host ::ng-deep tbody tr {
+     transition: background-color 0.2s;
+   
+     &:nth-child(even) {
+       background-color: rgba(255,255,255,0.03);
+     }
+     &:hover {
+       background-color: rgba(88,166,255,0.05);
+     }
+   }
+   
+   /* ปุ่มในตาราง */
+   :host ::ng-deep .text-blue-600,
+   :host ::ng-deep .text-red-600 {
+     background: none;
+     border: none;
+     padding: 0.25rem 0.5rem;
+     border-radius: 4px;
+     font-size: 0.9rem;
+     cursor: pointer;
+     transition: background-color 0.2s, color 0.2s;
+   }
+   
+   :host ::ng-deep .text-blue-600 {
+     color: #58A6FF;
+   
+     &:hover {
+       background-color: rgba(88,166,255,0.1);
+     }
+   }
+   
+   :host ::ng-deep .text-red-600 {
+     color: #D64045;
+   
+     &:hover {
+       background-color: rgba(214,64,69,0.1);
+     }
+   }
+   

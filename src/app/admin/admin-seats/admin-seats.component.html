@@ -7,7 +7,7 @@
      >
        <option [ngValue]="null">-- เลือกห้องฉาย --</option>
        <option *ngFor="let r of rooms" [value]="r.id">
-         {{ r.room_name }} (ID: {{ r.id }})
+         {{ r.room_name }} (โรงภาพยนตร์: {{ r.cinema.name }})
        </option>
      </select>
    </div>

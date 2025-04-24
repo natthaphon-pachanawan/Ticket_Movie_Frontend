@@ -1,0 +1,109 @@
+/* admin-seats.component.scss */
+
+:host {
+     display: block;
+     min-height: 100vh;
+     padding: 2rem 1rem;
+     background-color: #0D1117;  /* พื้นหลังหลัก */
+     color: #c9d1d9;              /* ตัวหนังสือหลักอ่อน */
+   }
+   
+   /* กลุ่มเลือกห้อง */
+   :host ::ng-deep .mb-4 {
+     margin-bottom: 1rem;
+   }
+   :host ::ng-deep .mb-4 label {
+     display: block;
+     margin-bottom: 0.25rem;
+     color: #8B949E;
+     font-weight: 500;
+   }
+   :host ::ng-deep .mb-4 select {
+     width: 100%;
+     padding: 0.5rem 0.75rem;
+     font-size: 1rem;
+     background-color: #0D1117;
+     color: #f0f0f0;
+     border: 1px solid #30363D;
+     border-radius: 4px;
+     outline: none;
+     transition: border-color 0.2s, box-shadow 0.2s;
+   }
+   :host ::ng-deep .mb-4 select:focus {
+     border-color: #58A6FF;
+     box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+   }
+   
+   /* ส่วนหัว + ปุ่ม Add Seat */
+   :host ::ng-deep .flex.justify-between {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1rem;
+   }
+   :host ::ng-deep .flex.justify-between h2 {
+     font-size: 1.25rem;
+     font-weight: 600;
+     color: #58A6FF;
+   }
+   :host ::ng-deep .flex.justify-between button {
+     padding: 0.5rem 1rem;
+     font-size: 0.95rem;
+     font-weight: 500;
+     background-color: #2563EB; /* ปรับให้เข้มขึ้น */
+     color: #fff;
+     border: none;
+     border-radius: 4px;
+     transition: background-color 0.2s;
+   }
+   :host ::ng-deep .flex.justify-between button:hover {
+     background-color: #1D4ED8;
+   }
+   
+   /* ตารางที่นั่ง */
+   :host ::ng-deep table {
+     width: 100%;
+     border-collapse: collapse;
+     font-size: 0.95rem;
+   }
+   :host ::ng-deep thead tr {
+     background-color: #161B22; /* เหมือน navbar */
+   }
+   :host ::ng-deep th,
+   :host ::ng-deep td {
+     border: 1px solid #30363D;
+     padding: 0.5rem;
+     color: #c9d1d9;
+     text-align: left;
+   }
+   :host ::ng-deep tbody tr:nth-child(even) {
+     background-color: rgba(255, 255, 255, 0.03);
+   }
+   :host ::ng-deep tbody tr:hover {
+     background-color: rgba(88, 166, 255, 0.05);
+   }
+   
+   /* ปุ่มในตาราง (Edit/Delete) */
+   :host ::ng-deep .text-blue-600,
+   :host ::ng-deep .text-red-600 {
+     border: none;
+     background: none;
+     padding: 0.25rem 0.5rem;
+     border-radius: 4px;
+     font-size: 0.9rem;
+     cursor: pointer;
+     transition: background-color 0.2s;
+   }
+   :host ::ng-deep .text-blue-600 {
+     color: #58A6FF;
+   }
+   :host ::ng-deep .text-blue-600:hover {
+     background-color: rgba(88, 166, 255, 0.1);
+   }
+   :host ::ng-deep .text-red-600 {
+     color: #D64045;
+   }
+   :host ::ng-deep .text-red-600:hover {
+     background-color: rgba(214, 64, 69, 0.1);
+   }
+   
