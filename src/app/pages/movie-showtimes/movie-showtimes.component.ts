@@ -6,22 +6,22 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 interface CinemaLocation {
-  name:       string;
-  province:   { name_th: string };
-  district:   { name_th: string };
-  subdistrict:{ name_th: string };
+  name: string;
+  province: { name_th: string };
+  district: { name_th: string };
+  subdistrict: { name_th: string };
 }
 
 interface Showtime {
-  id:                 number;
+  id: number;
   screening_datetime: string;
-  price:              number;
+  price: number;
   screening_room: {
-    cinema:    CinemaLocation;
+    cinema: CinemaLocation;
     room_name: string;
   };
   // เพิ่ม flag เพื่อบอกว่าเวลาผ่านไปแล้ว
-  isPast?:           boolean;
+  isPast?: boolean;
 }
 
 @Component({
@@ -44,12 +44,12 @@ export class MovieShowtimesComponent implements OnInit {
   showtimesByDate: { [date: string]: Showtime[] } = {};
 
   provinces: string[] = [];
-  amphoes:   string[] = [];
-  tambons:   string[] = [];
+  amphoes: string[] = [];
+  tambons: string[] = [];
 
   selectedProvince = '';
-  selectedAmphoe   = '';
-  selectedTambon   = '';
+  selectedAmphoe = '';
+  selectedTambon = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -68,9 +68,9 @@ export class MovieShowtimesComponent implements OnInit {
         `http://localhost:8000/api/screenings/filter/by-movie?movie_id=${this.movieId}`
       )
       .subscribe(res => {
-        const now       = new Date();
+        const now = new Date();
         const todayZero = new Date(now);
-        todayZero.setHours(0,0,0,0);
+        todayZero.setHours(0, 0, 0, 0);
 
         // 1) กรองเอารอบฉายที่วันที่ >= วันนี้
         this.allShowtimes = res.data
@@ -108,7 +108,7 @@ export class MovieShowtimesComponent implements OnInit {
       this.allShowtimes
         .filter(s =>
           s.screening_room.cinema.province.name_th === this.selectedProvince &&
-          s.screening_room.cinema.district.name_th   === this.selectedAmphoe
+          s.screening_room.cinema.district.name_th === this.selectedAmphoe
         )
         .map(s => s.screening_room.cinema.subdistrict.name_th)
     )).sort();
@@ -120,8 +120,8 @@ export class MovieShowtimesComponent implements OnInit {
       const c = s.screening_room.cinema;
       return (
         (!this.selectedProvince || c.province.name_th === this.selectedProvince) &&
-        (!this.selectedAmphoe   || c.district.name_th   === this.selectedAmphoe) &&
-        (!this.selectedTambon   || c.subdistrict.name_th === this.selectedTambon)
+        (!this.selectedAmphoe || c.district.name_th === this.selectedAmphoe) &&
+        (!this.selectedTambon || c.subdistrict.name_th === this.selectedTambon)
       );
     });
 
@@ -133,7 +133,16 @@ export class MovieShowtimesComponent implements OnInit {
       }
       this.showtimesByDate[day].push(s);
     }
+
+    // **จัดเรียงภายในแต่ละวัน** จากเช้า → สาย → บ่าย → ... 
+    Object.keys(this.showtimesByDate).forEach(day => {
+      this.showtimesByDate[day].sort((a, b) =>
+        new Date(a.screening_datetime).getTime() -
+        new Date(b.screening_datetime).getTime()
+      );
+    });
   }
+
 
   goToBooking(screeningId: number): void {
     this.router.navigate(['/booking/create'], {
@@ -142,10 +151,10 @@ export class MovieShowtimesComponent implements OnInit {
   }
 
   get showtimeDates(): string[] {
-    // ดึง key แล้วเรียงจากน้อยไปมาก (YYYY-MM-DD)
+    // 1) เอาวันทั้งหมดมา sort ตามตัวอักษร (YYYY-MM-DD)
     const dates = Object.keys(this.showtimesByDate).sort();
+    // 2) ถ้ามีวันนี้ ให้ดึงออกแล้ว unshift ไปหน้าแรก
     const today = new Date().toISOString().slice(0, 10);
-    // ถ้าในลิสต์มีวันนี้ ให้ย้ายไปหน้าแรก
     const idx = dates.indexOf(today);
     if (idx > -1) {
       dates.splice(idx, 1);
@@ -153,4 +162,5 @@ export class MovieShowtimesComponent implements OnInit {
     }
     return dates;
   }
+
 }

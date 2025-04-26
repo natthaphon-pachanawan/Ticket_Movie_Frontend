@@ -7,19 +7,10 @@
 
 <div *ngFor="let ticket of tickets" class="ticket-card">
   <p><strong>รหัสตั๋ว:</strong> {{ ticket.ticket_code }}</p>
+  <p><strong>โรงภาพยนตร์:</strong> {{ ticket.screeningRoom.cinema.name }}</p>
+  <p><strong>ห้องฉาย:</strong> {{ ticket.screeningRoom.room_name }}</p>
   <p><strong>ที่นั่ง:</strong> {{ ticket.seat.seat_number }} ({{ ticket.seat.seat_type }})</p>
   <p><strong>หนัง:</strong> {{ ticket.screening.movie.title }}</p>
   <p><strong>เวลา:</strong> {{ ticket.screening.screening_datetime | date:'medium' }}</p>
   <p><strong>ราคา:</strong> {{ ticket.price }} บาท</p>
-  <p>
-    <strong>สถานะ:</strong>
-    <span class="status"
-          [ngClass]="{
-            'valid': ticket.status === 'valid',
-            'expired': ticket.status === 'expired'
-          }"
-    >
-      {{ ticket.status }}
-    </span>
-  </p>
 </div>

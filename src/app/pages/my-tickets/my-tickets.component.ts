@@ -1,7 +1,8 @@
+// src/app/pages/my-tickets/my-tickets.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { CommonModule }      from '@angular/common';
+import { HttpClient }        from '@angular/common/http';
+import { RouterModule }      from '@angular/router';
 
 @Component({
   standalone: true,
@@ -16,18 +17,23 @@ export class MyTicketsComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<any>('http://localhost:8000/api/tickets/my').subscribe({
+    this.http.get<{ data: any[] }>('http://localhost:8000/api/tickets/my').subscribe({
       next: res => {
-        const now = new Date().getTime();
+        const now = Date.now();
 
-        // กรองเฉพาะตั๋วที่ยังไม่หมดเวลาฉาย
-        this.tickets = (res.data ?? res).filter((ticket: any) => {
-          const screeningTime = new Date(ticket.screening.screening_datetime).getTime();
-          const duration = ticket.screening.movie.duration * 60 * 1000; // นาที -> ms
-          const endTime = screeningTime + duration;
-
-          return now <= endTime; // แสดงเฉพาะที่ยังไม่หมดเวลาฉาย
-        });
+        this.tickets = (res.data ?? [])
+          // กรองเฉพาะตั๋วยังไม่หมดเวลา
+          .filter((t: any) => {
+            const startMs    = new Date(t.screening.screening_datetime).getTime();
+            const durationMs = t.screening.movie.duration * 60_000;
+            return now <= startMs + durationMs;
+          })
+          // สร้าง alias และ status text
+          .map((t: any) => ({
+            ...t,
+            screeningRoom: t.screening.screening_room,
+            statusText:    t.status === 'active' ? 'ยังใช้ได้' : 'หมดอายุ'
+          }));
       },
       error: err => {
         alert('ไม่สามารถโหลดข้อมูลตั๋วได้');
@@ -35,5 +41,4 @@ export class MyTicketsComponent implements OnInit {
       }
     });
   }
-
 }
