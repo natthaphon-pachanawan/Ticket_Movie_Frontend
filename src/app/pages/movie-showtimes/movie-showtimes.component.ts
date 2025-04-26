@@ -20,6 +20,8 @@ interface Showtime {
     cinema:    CinemaLocation;
     room_name: string;
   };
+  // เพิ่ม flag เพื่อบอกว่าเวลาผ่านไปแล้ว
+  isPast?:           boolean;
 }
 
 @Component({
@@ -37,12 +39,10 @@ interface Showtime {
 export class MovieShowtimesComponent implements OnInit {
   movieId!: number;
 
-  // เก็บข้อมูลรอบฉายทั้งหมด (ก่อนกรอง)
+  // เก็บรอบฉายที่ยังไม่ถึงวันก่อนหน้าเท่านั้น
   allShowtimes: Showtime[] = [];
-  // จัดกลุ่มแยกตามวันที่ หลังกรอง
   showtimesByDate: { [date: string]: Showtime[] } = {};
 
-  // ตัวกรองสถานที่
   provinces: string[] = [];
   amphoes:   string[] = [];
   tambons:   string[] = [];
@@ -68,20 +68,28 @@ export class MovieShowtimesComponent implements OnInit {
         `http://localhost:8000/api/screenings/filter/by-movie?movie_id=${this.movieId}`
       )
       .subscribe(res => {
-        // ชัดเจนว่า res.data คือ Showtime[]
-        this.allShowtimes = res.data;
+        const now       = new Date();
+        const todayZero = new Date(now);
+        todayZero.setHours(0,0,0,0);
 
-        // 1) เตรียมรายการชื่อจังหวัด
+        // 1) กรองเอารอบฉายที่วันที่ >= วันนี้
+        this.allShowtimes = res.data
+          .filter(s => new Date(s.screening_datetime) >= todayZero)
+          .map(s => ({
+            ...s,
+            // isPast = รอบฉายก่อนเวลาปัจจุบันหรือไม่
+            isPast: new Date(s.screening_datetime) < now
+          }));
+
+        // 2) เตรียมรายชื่อจังหวัด
         this.provinces = Array.from(new Set(
           this.allShowtimes.map(s => s.screening_room.cinema.province.name_th)
         )).sort();
 
-        // 2) เรียกกรองครั้งแรก (ยังไม่เลือกอะไร)
         this.applyFilters();
       });
   }
 
-  /** เมื่อเปลี่ยนจังหวัด */
   onProvinceChange() {
     this.selectedAmphoe = '';
     this.selectedTambon = '';
@@ -94,7 +102,6 @@ export class MovieShowtimesComponent implements OnInit {
     this.applyFilters();
   }
 
-  /** เมื่อเปลี่ยนอำเภอ */
   onAmphoeChange() {
     this.selectedTambon = '';
     this.tambons = Array.from(new Set(
@@ -108,13 +115,12 @@ export class MovieShowtimesComponent implements OnInit {
     this.applyFilters();
   }
 
-  /** กรอง ตาม province/amphoe/tambon และ จัดกลุ่มตามวัน */
   applyFilters() {
     const filtered = this.allShowtimes.filter(s => {
       const c = s.screening_room.cinema;
       return (
         (!this.selectedProvince || c.province.name_th === this.selectedProvince) &&
-        (!this.selectedAmphoe   || c.district.name_th === this.selectedAmphoe) &&
+        (!this.selectedAmphoe   || c.district.name_th   === this.selectedAmphoe) &&
         (!this.selectedTambon   || c.subdistrict.name_th === this.selectedTambon)
       );
     });
@@ -136,6 +142,15 @@ export class MovieShowtimesComponent implements OnInit {
   }
 
   get showtimeDates(): string[] {
-    return Object.keys(this.showtimesByDate);
+    // ดึง key แล้วเรียงจากน้อยไปมาก (YYYY-MM-DD)
+    const dates = Object.keys(this.showtimesByDate).sort();
+    const today = new Date().toISOString().slice(0, 10);
+    // ถ้าในลิสต์มีวันนี้ ให้ย้ายไปหน้าแรก
+    const idx = dates.indexOf(today);
+    if (idx > -1) {
+      dates.splice(idx, 1);
+      dates.unshift(today);
+    }
+    return dates;
   }
 }

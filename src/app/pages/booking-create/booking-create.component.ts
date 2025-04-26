@@ -70,7 +70,7 @@ export class BookingCreateComponent implements OnInit {
   // จัดกลุ่มที่นั่งตามแถว โดยสร้าง key แบบ "Row-<row_number>"
   groupSeatsByRow(seats: Seat[]): { [row: string]: Seat[] } {
     return seats.reduce((group, seat) => {
-      const rowKey = 'Row-' + seat.row;
+      const rowKey = 'แถวที่ ' + seat.row;
       if (!group[rowKey]) {
         group[rowKey] = [];
       }
@@ -83,8 +83,8 @@ export class BookingCreateComponent implements OnInit {
   // แถวที่มีเลขสูงสุดจะแสดงด้านบน และแถวที่มีเลขต่ำสุด (เช่น Row-1) อยู่ล่างสุด
   getRowKeys(): string[] {
     return Object.keys(this.seatsByRow).sort((a, b) => {
-      const rowA = parseInt(a.replace('Row-', ''));
-      const rowB = parseInt(b.replace('Row-', ''));
+      const rowA = parseInt(a.replace('แถวที่ ', ''));
+      const rowB = parseInt(b.replace('แถวที่ ', ''));
       return rowB - rowA;
     });
   }

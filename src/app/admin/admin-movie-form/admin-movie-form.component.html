@@ -1,68 +1,59 @@
 <h2 class="page-title">
   <i class="fa fa-film"></i>
-  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Movie
+  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} ภาพยนตร์
 </h2>
 
 <div class="form-container">
   <form (ngSubmit)="save()" #f="ngForm" enctype="multipart/form-data">
-    <!-- Title -->
-    <label>Title</label>
-    <input name="title" type="text" [(ngModel)]="movie.title" required />
+    <!-- ชื่อเรื่อง -->
+    <label>ชื่อเรื่อง</label>
+    <input name="title" type="text" [(ngModel)]="movie.title" required placeholder="กรอกชื่อภาพยนตร์" />
 
-    <!-- Description -->
-    <label>Description</label>
-    <textarea name="description" [(ngModel)]="movie.description"></textarea>
+    <!-- คำอธิบาย -->
+    <label>คำอธิบาย</label>
+    <textarea name="description" [(ngModel)]="movie.description" placeholder="กรอกคำอธิบายภาพยนตร์ (ถ้ามี)"></textarea>
 
-    <!-- Genre + Director -->
+    <!-- ประเภท + ผู้กำกับ -->
     <div class="two-col">
       <div>
-        <label>Genre</label>
-        <input name="genre" type="text" [(ngModel)]="movie.genre" required />
+        <label>ประเภท</label>
+        <input name="genre" type="text" [(ngModel)]="movie.genre" required placeholder="เช่น Action, Comedy" />
       </div>
       <div>
-        <label>Director</label>
-        <input name="director" type="text" [(ngModel)]="movie.director" />
+        <label>ผู้กำกับ</label>
+        <input name="director" type="text" [(ngModel)]="movie.director" placeholder="กรอกชื่อผู้กำกับ" />
       </div>
     </div>
 
-    <!-- Cast + Duration -->
+    <!-- นักแสดง + ความยาว -->
     <div class="two-col">
       <div>
-        <label>Cast</label>
-        <input name="cast" type="text" [(ngModel)]="movie.cast" />
+        <label>นักแสดง</label>
+        <input name="cast" type="text" [(ngModel)]="movie.cast" placeholder="กรอกรายชื่อนักแสดง" />
       </div>
       <div>
-        <label>Duration (min.)</label>
-        <input name="duration" type="number" [(ngModel)]="movie.duration" />
+        <label>ความยาว (นาที)</label>
+        <input name="duration" type="number" [(ngModel)]="movie.duration" placeholder="เช่น 120" />
       </div>
     </div>
 
-    <!-- Release Date -->
-    <label>Release Date</label>
-    <input name="release_date"
-           type="date"
-           [(ngModel)]="movie.release_date"
-           required />
+    <!-- วันเข้าฉาย -->
+    <label>วันเข้าฉาย</label>
+    <input name="release_date" type="date" [(ngModel)]="movie.release_date" required />
 
-    <!-- Poster Image -->
+    <!-- รูปโปสเตอร์ -->
     <div class="file-input">
-      <label for="poster">Poster Image</label>
-      <input id="poster"
-             type="file"
-             (change)="onFileSelected($event)"
-             accept="image/*" />
+      <label for="poster">รูปโปสเตอร์</label>
+      <input id="poster" type="file" (change)="onFileSelected($event)" accept="image/*" />
       <div *ngIf="previewUrl" class="preview">
-        <img [src]="previewUrl" alt="Preview" />
+        <img [src]="previewUrl" alt="ตัวอย่างโปสเตอร์" />
       </div>
     </div>
 
-    <!-- Submit -->
-    <button type="submit"
-            [disabled]="f.invalid"
-            class="btn-submit">
-      <i class="fa"
-         [ngClass]="isEdit ? 'fa-save' : 'fa-plus-circle'"></i>
-      {{ isEdit ? 'Update' : 'Create' }}
+    <!-- ปุ่มบันทึก -->
+    <button type="submit" [disabled]="f.invalid" class="btn-submit">
+      <i class="fa" [ngClass]="isEdit ? 'fa-save' : 'fa-plus-circle'"></i>
+      {{ isEdit ? 'บันทึกการแก้ไข' : 'เพิ่มภาพยนตร์' }}
     </button>
   </form>
 </div>

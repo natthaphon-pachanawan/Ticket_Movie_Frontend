@@ -53,12 +53,16 @@
               {{ s.screening_room.cinema.district.name_th }}
               {{ s.screening_room.cinema.subdistrict.name_th }}
             </div>
-          </div>                
+          </div>
           <div class="price">
             <i class="fa fa-money"></i>
             {{ s.price | number:'1.0-0' }} ฿
           </div>
-          <button class="btn-book" (click)="goToBooking(s.id)">
+          <button
+            class="btn-book"
+            (click)="goToBooking(s.id)"
+            [disabled]="s.isPast"
+          >
             จองรอบนี้
           </button>
         </div>

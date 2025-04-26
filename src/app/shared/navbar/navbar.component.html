@@ -1,7 +1,7 @@
 <nav class="navbar">
-  <div class="logo" (click)="goHome()">TicketMaster</div>
+  <div class="logo" (click)="goHome()">TicketMovie</div>
 
-  <!-- ลิงก์หลัก (logged-in user) -->
+  <!-- ลิงก์หลัก (ผู้ใช้ล็อกอินแล้ว) -->
   <div class="main-links" *ngIf="auth.isLoggedIn()">
     <a (click)="goHome()">
       <span class="icon">🏠</span> หน้าแรก
@@ -13,33 +13,33 @@
       <span class="icon">🎟️</span> ตั๋วของฉัน
     </a>
 
-    <!-- ถ้าเป็น Admin ให้โชว์ลิงก์ทั้งหมดของ Admin Dashboard -->
+    <!-- ถ้าเป็น Admin ให้โชว์ลิงก์ทั้งหมดของแดชบอร์ด -->
     <ng-container *ngIf="auth.isAdmin()">
       <a routerLink="/admin/movies"      routerLinkActive="active">
-        <span class="icon">🎞️</span> Movies
+        <span class="icon">🎞️</span> จัดการภาพยนตร์
       </a>
       <a routerLink="/admin/cinemas"     routerLinkActive="active">
-        <span class="icon">🏢</span> Cinemas
+        <span class="icon">🏢</span> จัดการโรงหนัง
       </a>
       <a routerLink="/admin/rooms"       routerLinkActive="active">
-        <span class="icon">🎫</span> Rooms
+        <span class="icon">🎫</span> จัดการห้องฉาย
       </a>
       <a routerLink="/admin/screenings"  routerLinkActive="active">
-        <span class="icon">🕒</span> Screenings
+        <span class="icon">🕒</span> จัดการรอบฉาย
       </a>
       <a routerLink="/admin/seats"       routerLinkActive="active">
-        <span class="icon">💺</span> Seats
+        <span class="icon">💺</span> จัดการที่นั่ง
       </a>
       <a routerLink="/admin/slips"       routerLinkActive="active">
-        <span class="icon">🧾</span> Slips
+        <span class="icon">🧾</span> ตรวจสลิป
       </a>
     </ng-container>
   </div>
 
-  <!-- ลิงก์ Auth -->
+  <!-- ลิงก์สำหรับเข้าสู่ระบบ/ออกจากระบบ -->
   <div class="auth-links">
     <a *ngIf="auth.isLoggedIn()" routerLink="/profile" routerLinkActive="active">
-      <span class="icon">👤</span> โปรไฟล์
+      <span class="icon">👤</span> โปรไฟล์ของฉัน
     </a>
     <a *ngIf="!auth.isLoggedIn()" routerLink="/login" routerLinkActive="active">
       <span class="icon">🔑</span> เข้าสู่ระบบ

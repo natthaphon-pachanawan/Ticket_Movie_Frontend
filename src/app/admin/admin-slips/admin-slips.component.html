@@ -2,11 +2,11 @@
   <!-- ส่วนหัว + ปุ่มรีโหลด -->
   <div class="header">
     <h2>📑 จัดการสลิปการชำระเงิน (รอดำเนินการ)</h2>
-    <button class="btn-reload" (click)="load()">↻ Refresh</button>
+    <button class="btn-reload" (click)="load()">↻ รีโหลด</button>
   </div>
 
   <!-- Loading -->
-  <div *ngIf="loading" class="loading">Loading …</div>
+  <div *ngIf="loading" class="loading">กำลังโหลด …</div>
 
   <!-- ตารางสลิป -->
   <table *ngIf="!loading && slips.length" class="slips-table">
@@ -15,16 +15,16 @@
         <th>ID</th>
         <th>สลิป</th>
         <th>ผู้ใช้ / หนัง / เวลา</th>
-        <th>ยอด</th>
+        <th>ยอดเงิน</th>
         <th>สถานะ</th>
-        <th>Actions</th>
+        <th>การกระทำ</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let s of slips">
         <td>{{ s.id }}</td>
         <td>
-          <img [src]="imgSrc(s)" alt="Slip" class="slip-img" />
+          <img [src]="imgSrc(s)" alt="สลิปการชำระเงิน" class="slip-img" />
         </td>
         <td class="user-movie">
           <div>👤 {{ s.booking?.user?.username || '—' }}</div>
@@ -33,12 +33,12 @@
         </td>
         <td class="amount">{{ s.amount | number:'1.2-2' }} ฿</td>
         <td>
-          <span class="status pending">pending</span>
+          <span class="status pending">รอดำเนินการ</span>
         </td>
         <td class="actions">
-          <button class="btn-approve" (click)="approve(s)">✔️ Approve</button>
-          <button class="btn-reject"  (click)="reject(s)">❌ Reject</button>
-          <button class="btn-delete"  (click)="remove(s)">🗑️ Delete</button>
+          <button class="btn-approve" (click)="approve(s)">✔️ อนุมัติ</button>
+          <button class="btn-reject"  (click)="reject(s)">❌ ปฏิเสธ</button>
+          <!-- <button class="btn-delete"  (click)="remove(s)">🗑️ ลบ</button> -->
         </td>
       </tr>
     </tbody>

@@ -1,32 +1,35 @@
 <div class="flex justify-between items-center mb-4">
-     <h2 class="text-xl font-semibold">จัดการ Cinemas</h2>
-     <button
-       (click)="goCreate()"
-       class="px-4 py-2 bg-blue-600 text-white rounded"
-     >
-       + Add Cinema
-     </button>
-   </div>
-   
-   <table class="min-w-full border">
-     <thead class="bg-gray-100">
-       <tr>
-         <th class="p-2 border">ID</th>
-         <th class="p-2 border">Name</th>
-         <th class="p-2 border">Address</th>
-         <th class="p-2 border">Actions</th>
-       </tr>
-     </thead>
-     <tbody>
-       <tr *ngFor="let c of cinemas" class="hover:bg-gray-50">
-         <td class="p-2 border">{{ c.id }}</td>
-         <td class="p-2 border">{{ c.name }}</td>
-         <td class="p-2 border">{{ c.address }}</td>
-         <td class="p-2 border">
-           <button (click)="goEdit(c.id)" class="text-blue-600 mr-2">Edit</button>
-           <button (click)="delete(c.id)" class="text-red-600">Delete</button>
-         </td>
-       </tr>
-     </tbody>
-   </table>
-   
+  <h2 class="text-xl font-semibold">จัดการโรงภาพยนตร์</h2>
+  <button
+    (click)="goCreate()"
+    class="px-4 py-2 bg-blue-600 text-white rounded"
+  >
+    + เพิ่มโรงภาพยนตร์
+  </button>
+</div>
+
+<table class="min-w-full border">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="p-2 border">รหัส</th>
+      <th class="p-2 border">ชื่อ</th>
+      <th class="p-2 border">ที่อยู่</th>
+      <th class="p-2 border">จัดการ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of cinemas" class="hover:bg-gray-50">
+      <td class="p-2 border">{{ c.id }}</td>
+      <td class="p-2 border">{{ c.name }}</td>
+      <td class="p-2 border">{{ c.address }}</td>
+      <td class="p-2 border">
+        <button (click)="goEdit(c.id)" class="text-blue-600 mr-2">
+          แก้ไข
+        </button>
+        <button (click)="delete(c.id)" class="text-red-600">
+          ลบ
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

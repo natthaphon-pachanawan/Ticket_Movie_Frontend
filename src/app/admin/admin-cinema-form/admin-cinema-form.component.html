@@ -1,11 +1,11 @@
 <h2 class="page-title">
-  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Cinema
+  {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} โรงภาพยนตร์
 </h2>
 
 <div class="form-container">
   <form (ngSubmit)="save()" #f="ngForm" class="cinema-form">
 
-    <!-- ชื่อโรงหนัง -->
+    <!-- ชื่อโรงภาพยนตร์ -->
     <label>ชื่อโรงภาพยนตร์</label>
     <input
       name="name"
@@ -25,13 +25,13 @@
 
     <!-- จังหวัด / อำเภอ / ตำบล -->
     <div class="grid grid-cols-3 gap-4">
-      <!-- Province -->
+      <!-- จังหวัด -->
       <div>
         <label>จังหวัด</label>
         <select
           name="province_id"
           [(ngModel)]="cinema.province_id"
-          (change)="onProvinceChange()"
+          (ngModelChange)="onProvinceChange()"
           required
         >
           <option value="">— เลือกจังหวัด —</option>
@@ -40,13 +40,13 @@
           </option>
         </select>
       </div>
-      <!-- District -->
+      <!-- อำเภอ -->
       <div>
         <label>อำเภอ</label>
         <select
           name="district_id"
           [(ngModel)]="cinema.district_id"
-          (change)="onDistrictChange()"
+          (ngModelChange)="onDistrictChange()"
           [disabled]="!cinema.province_id"
           required
         >
@@ -56,7 +56,7 @@
           </option>
         </select>
       </div>
-      <!-- Subdistrict -->
+      <!-- ตำบล -->
       <div>
         <label>ตำบล</label>
         <select
@@ -100,7 +100,7 @@
       [disabled]="f.invalid"
       class="btn-submit"
     >
-      {{ isEdit ? 'Update' : 'Create' }}
+      {{ isEdit ? 'บันทึกการแก้ไข' : 'เพิ่มโรงภาพยนตร์' }}
     </button>
   </form>
 </div>

@@ -1,27 +1,29 @@
 <div class="flex justify-between items-center mb-4">
-  <h2>จัดการ Screening Rooms</h2>
-  <button (click)="goCreate()">+ Add Room</button>
+  <h2 class="text-xl font-semibold">จัดการห้องฉาย</h2>
+  <button (click)="goCreate()" class="px-4 py-2 bg-blue-600 text-white rounded">
+    + เพิ่มห้องฉาย
+  </button>
 </div>
 
-<table>
-  <thead>
+<table class="w-full border-collapse text-sm">
+  <thead class="bg-gray-200">
     <tr>
-      <th>ID</th>
-      <th>โรงภาพยนตร์</th> 
-      <th>Room Name</th>
-      <th>Capacity</th>
-      <th>Actions</th>
+      <th class="border px-2 py-1">ลำดับ</th>
+      <th class="border px-2 py-1">โรงภาพยนตร์</th>
+      <th class="border px-2 py-1">ชื่อห้อง</th>
+      <th class="border px-2 py-1">จำนวนที่นั่ง</th>
+      <th class="border px-2 py-1">จัดการ</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let r of rooms">
-      <td>{{ r.id }}</td>
-      <td>{{ r.cinema.name }}</td>
-      <td>{{ r.room_name }}</td>
-      <td>{{ r.seat_capacity }}</td>
-      <td>
-        <button (click)="goEdit(r.id)" class="text-blue-600 mr-2">Edit</button>
-        <button (click)="delete(r.id)" class="text-red-600">Delete</button>
+    <tr *ngFor="let r of rooms" class="hover:bg-gray-50">
+      <td class="border px-2 py-1">{{ r.id }}</td>
+      <td class="border px-2 py-1">{{ r.cinema.name }}</td>
+      <td class="border px-2 py-1">{{ r.room_name }}</td>
+      <td class="border px-2 py-1">{{ r.seat_capacity }} ที่นั่ง</td>
+      <td class="border px-2 py-1 space-x-2">
+        <button (click)="goEdit(r.id)" class="text-blue-600 mr-2">แก้ไข</button>
+        <button (click)="delete(r.id)" class="text-red-600">ลบ</button>
       </td>
     </tr>
   </tbody>

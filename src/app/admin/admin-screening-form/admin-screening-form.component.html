@@ -1,12 +1,12 @@
 <div class="form-container">
   <h2 class="page-title">
-    {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} Screening
+    {{ isEdit ? 'แก้ไข' : 'เพิ่ม' }} รอบฉาย
   </h2>
 
   <form (ngSubmit)="save()" #f="ngForm" class="screening-form">
-    <!-- Movie -->
+    <!-- ภาพยนตร์ -->
     <div class="field">
-      <label>Movie</label>
+      <label>ภาพยนตร์</label>
       <select name="movie_id" [(ngModel)]="screening.movie_id" required>
         <option [ngValue]="null" disabled>-- เลือกภาพยนตร์ --</option>
         <option *ngFor="let m of movies" [ngValue]="m.id">
@@ -15,9 +15,9 @@
       </select>
     </div>
 
-    <!-- Screening Room -->
+    <!-- ห้องฉาย -->
     <div class="field">
-      <label>Screening Room</label>
+      <label>ห้องฉาย</label>
       <select name="screening_room_id" [(ngModel)]="screening.screening_room_id" required>
         <option [ngValue]="null" disabled>-- เลือกห้องฉาย --</option>
         <option *ngFor="let r of rooms" [ngValue]="r.id">
@@ -26,20 +26,21 @@
       </select>
     </div>
 
-    <!-- Date & Time -->
+    <!-- วันและเวลา -->
     <div class="field">
-      <label>Date &amp; Time</label>
+      <label>วันและเวลา</label>
       <input name="screening_datetime" type="datetime-local" [(ngModel)]="screening.screening_datetime" required />
     </div>
 
-    <!-- Price -->
+    <!-- ราคา -->
     <div class="field">
-      <label>Price (฿)</label>
+      <label>ราคา (บาท)</label>
       <input name="price" type="number" min="0" [(ngModel)]="screening.price" required />
     </div>
 
+    <!-- ปุ่มบันทึก -->
     <button type="submit" [disabled]="f.invalid" class="btn-submit">
-      {{ isEdit ? 'Update' : 'Create' }}
+      {{ isEdit ? 'อัปเดต' : 'สร้างใหม่' }}
     </button>
   </form>
 </div>
